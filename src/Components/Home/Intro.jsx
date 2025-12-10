@@ -1,6 +1,4 @@
 import React from "react";
-// import img from '../../assets/pet03.jpg'
-
 const Intro = () => {
   return (
     <div>

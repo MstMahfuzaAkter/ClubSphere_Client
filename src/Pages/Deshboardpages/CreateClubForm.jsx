@@ -5,11 +5,40 @@ import { FiUpload, FiMapPin, FiTag, FiDollarSign } from "react-icons/fi";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import useAuth from "../../Hook/useAuth";
 import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
 
 const CreateClubForm = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-
+  // useMutation hook useCase (POST || PUT || PATCH || DELETE)
+  const {
+    isPending,
+    isError,
+    mutateAsync,
+    reset: mutationReset,
+  } = useMutation({
+    mutationFn: async payload =>
+      axiosSecure.post('/club', payload),
+    onSuccess: data => {
+      console.log(data)
+      // show toast
+      toast.success("your club create sucessfull !!");
+      // navigate to my inventory page
+      mutationReset()
+      // Query key invalidate
+    },
+    onError: error => {
+      console.log(error)
+    },
+    onMutate: payload => {
+      console.log('I will post this data--->', payload)
+    },
+    onSettled: (data, error) => {
+      console.log('I am from onSettled--->', data)
+      if (error) console.log(error)
+    },
+    retry: 3,
+  })
   const {
     register,
     handleSubmit,
@@ -19,20 +48,20 @@ const CreateClubForm = () => {
 
   const onSubmit = async (data) => {
     try {
+      console.log(data);
       const imageFile = data.bannerImage[0];
 
       // Upload image to imgbb
       const formData = new FormData();
       formData.append("image", imageFile);
 
-      const imgUrl = `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_IMG_HOST_KEY
-      }`;
+      const imgUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_HOST_KEY
+        }`;
 
       const imgRes = await axios.post(imgUrl, formData);
       const imageUrl = imgRes.data.data.url;
 
-      console.log(imageUrl);
+      //console.log(imageUrl);
 
       // Create club data
       const clubInfo = {
@@ -50,20 +79,22 @@ const CreateClubForm = () => {
 
 
 
-      axiosSecure.post('/club', clubInfo)
-      .then(res => {
-        if(res.data.insertedId){
-            console.log("club created in database");
-        }
-      })
+      // axiosSecure.post('/club', clubInfo)
+      //   .then(res => {
+      //     if (res.data.insertedId) {
+      //       console.log("club created in database");
+      //     }
+      //   })
 
-      
-      
-      toast.success("your club create sucessfull !!");
 
-      reset();
 
-    } catch (err) {
+      // toast.success("your club create sucessfull !!");
+      await mutateAsync(clubInfo)
+      reset()
+
+
+    }
+    catch (err) {
       console.error(err);
       toast.error("smothing went wrong !!");
     }
@@ -71,17 +102,7 @@ const CreateClubForm = () => {
 
   return (
     <div
-      className="
-        w-full 
-        max-w-md 
-        lg:max-w-3xl 
-        mx-auto 
-        bg-white 
-        shadow-xl 
-        rounded-xl 
-        p-6 
-        lg:p-10 
-        space-y-6
+      className="w-full max-w-md lg:max-w-3xl mx-auto  bg-white shadow-xl rounded-xl p-6 lg:p-10 space-y-6
       "
     >
       <h2 className="text-xl lg:text-3xl font-bold text-center">

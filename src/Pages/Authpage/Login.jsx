@@ -49,7 +49,7 @@ const Login = () => {
 
           <p className="text-center text-sm text-gray-400 mb-6">
             Don't have account?
-            <Link to='/regester' className="text-blue-400 hover:underline">
+            <Link to='/register' className="text-blue-400 hover:underline">
               {" "}
               Registration here
             </Link>

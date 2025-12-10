@@ -15,7 +15,7 @@ const CreateEvent = ({ clubId }) => {
     handleSubmit,
     reset,
     formState: { errors },
-    
+
   } = useForm();
 
   const onSubmit = async (data) => {

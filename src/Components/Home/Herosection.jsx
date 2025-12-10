@@ -22,7 +22,7 @@ const Herosection = () => {
           <img className="h-[480px] object-cover rounded-2xl" src={img1} />
           <div className="absolute bottom-40 md:bottom-50 left-1/2 transform -translate-x-1/2 text-center text-black px-4 space-y-4">
             <h1 className="text-4xl font-bold">
-              Welcome to HobbyHub
+              Welcome to ClubSphere
               <br />
               <span className="text-indigo-600">
                 <Typewriter
