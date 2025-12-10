@@ -1,0 +1,12 @@
+ @import "tailwindcss";
+ @plugin "daisyui";
+ @plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
+  themes: light --default;
+ }
+
+
+
+.active{
+  @apply text-orange-600 underline
+}
