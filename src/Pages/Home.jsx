@@ -5,6 +5,7 @@ import Intro from '../Components/Home/Intro';
 import WhyJoin from '../Components/Home/WhyJoin';
 import ClubSphereHowItWorks from '../Components/Home/ClubSphereHowItWorks';
 import FeaturedClubs from '../Components/Home/FeaturedClubs';
+import Events from '../Components/Home/Event/Events';
 
 
 const Home = () => {
@@ -13,6 +14,7 @@ const Home = () => {
         <div>
             <Herosection></Herosection>
             <FeaturedClubs></FeaturedClubs>
+            <Events></Events>
             <Intro></Intro>
             <WhyJoin></WhyJoin>
             <ClubSphereHowItWorks></ClubSphereHowItWorks>

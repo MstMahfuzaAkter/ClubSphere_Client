@@ -15,7 +15,6 @@ const CreateEvent = ({ clubId }) => {
     handleSubmit,
     reset,
     formState: { errors },
-
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -24,13 +23,13 @@ const CreateEvent = ({ clubId }) => {
         clubId,
         title: data.title,
         description: data.description,
-        eventDate: data.eventDate,
+        eventDate: new Date(data.eventDate), // ensure date stored as Date
         location: data.location,
-        isPaid: isPaid,
+        isPaid,
         eventFee: isPaid ? Number(data.eventFee) : 0,
-        maxAttendees: data.maxAttendees ? Number(data.maxAttendees) : null,
+        maxAttendees: data.maxAttendees ? Number(data.maxAttendees) : undefined,
         createdAt: new Date(),
-        createdBy: user?.email
+        createdBy: user?.email,
       };
 
       const res = await axiosSecure.post("/events", eventInfo);
@@ -54,7 +53,6 @@ const CreateEvent = ({ clubId }) => {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 lg:space-y-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-
           {/* Event Title */}
           <div className="form-control">
             <label className="label font-semibold">Event Title</label>
@@ -63,9 +61,7 @@ const CreateEvent = ({ clubId }) => {
               placeholder="Photography Workshop"
               {...register("title", { required: "Event title is required" })}
             />
-            {errors.title && (
-              <p className="text-red-500 text-sm">{errors.title.message}</p>
-            )}
+            {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
           </div>
 
           {/* Event Date */}

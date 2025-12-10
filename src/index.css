@@ -8,5 +8,5 @@
 
 
 .active{
-  @apply text-orange-600 underline
+  @apply text-yellow-600 underline
 }

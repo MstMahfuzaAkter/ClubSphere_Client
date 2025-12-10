@@ -6,7 +6,6 @@ const ClubCard = ({ c }) => {
   const {
     _id,
     clubName,
-    description,
     category,
     location,
     bannerImage,
@@ -41,9 +40,6 @@ const ClubCard = ({ c }) => {
         <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
           {clubName}
         </h2>
-        <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2">
-          {description || "No description available"}
-        </p>
         <span className="text-sm text-gray-600 dark:text-gray-400">
           Category: {category || "General"}
         </span>

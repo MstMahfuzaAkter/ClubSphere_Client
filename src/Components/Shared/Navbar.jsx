@@ -50,10 +50,15 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          <div>
-            <img src={logo} alt="" className="w-10 h-10 rounded-full" />
-          </div>
-          <a className="btn btn-ghost text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ClubSphere</a>
+          <Link to="/">
+            <div>
+              <img src={logo} alt="Logo" className="w-10 h-10 rounded-full cursor-pointer" />
+            </div>
+          </Link>
+
+          <Link to='/'>
+            <h1 className="btn btn-ghost text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ClubSphere</h1>
+          </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{links}</ul>
