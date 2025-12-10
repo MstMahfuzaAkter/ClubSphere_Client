@@ -1,59 +1,71 @@
 import React from "react";
-import { FiUsers, FiCalendar, FiMessageCircle, FiCheckCircle } from "react-icons/fi";
+import { FiUsers, FiCalendar, FiMessageCircle, FiCheckCircle, FiStar, FiGift } from "react-icons/fi";
 
 export default function ClubSphereHowItWorks({ className = "" }) {
   const steps = [
     {
       id: 1,
-      title: "Create or Join a Club",
-      desc: "Sign up quickly and either create your own club or explore public clubs that match your interests.",
+      title: "Find Your People",
+      desc: "Explore clubs that match your hobbies or start your own—building connections has never been easier.",
       icon: <FiUsers className="w-6 h-6" />,
     },
     {
       id: 2,
-      title: "Plan Events & Schedules",
-      desc: "Use smart tools to schedule meetups, assign organizers, and sync events with calendars.",
+      title: "Plan Your Events",
+      desc: "Schedule gatherings, assign organizers, and keep everyone in sync effortlessly.",
       icon: <FiCalendar className="w-6 h-6" />,
     },
     {
       id: 3,
-      title: "Communicate Easily",
-      desc: "Group chats, announcements, and discussions keep all members engaged and informed.",
+      title: "Engage & Communicate",
+      desc: "Use group chats, announcements, and discussion boards to keep your members active.",
       icon: <FiMessageCircle className="w-6 h-6" />,
     },
     {
       id: 4,
-      title: "Track Progress & Confirm",
-      desc: "Record attendance, mark tasks completed, and keep everything organized effortlessly.",
+      title: "Track Progress",
+      desc: "Record attendance, mark milestones, and monitor club activities easily.",
       icon: <FiCheckCircle className="w-6 h-6" />,
+    },
+    {
+      id: 5,
+      title: "Reward Participation",
+      desc: "Celebrate active members with badges, recognition, and special perks.",
+      icon: <FiStar className="w-6 h-6" />,
+    },
+    {
+      id: 6,
+      title: "Share Achievements",
+      desc: "Highlight events, milestones, and club stories to inspire and attract new members.",
+      icon: <FiGift className="w-6 h-6" />,
     },
   ];
 
   return (
     <section
-      className={`w-full mx-auto p-12 bg-gradient-to-br from-[#c9f6ff] to-[#ffe4cc]  shadow-xl text-slate-900 ${className}`}
+      className={`w-full mx-auto p-12 bg-gradient-to-br from-[#e0f7ff] to-[#fff4e6] shadow-xl text-slate-900 ${className}`}
       aria-labelledby="how-it-works"
     >
       {/* HEADER */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
-        <div className="space-y-2">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
+        <div className="space-y-3">
           <h2
             id="how-it-works"
-            className="text-3xl md:text-4xl font-bold tracking-tight text-[#0092b8]"
+            className="text-3xl md:text-4xl font-bold tracking-tight text-[#007a99]"
           >
-            How ClubSphere Works
+            Discover ClubSphere
           </h2>
 
           <p className="text-slate-600 text-base max-w-xl leading-relaxed">
-            A clean and simple workflow that helps you manage clubs effortlessly—from joining
-            or creating a club to managing events, communication, and progress tracking.
+            From finding your tribe to leading exciting events, ClubSphere makes club life smooth, fun, and fully connected.
           </p>
         </div>
 
         <a
-          className="inline-flex items-center px-5 py-3 bg-[#0092b8] text-white rounded-xl text-sm font-semibold shadow hover:bg-[#007a99] transition"
+          href="/Clubs"
+          className="inline-flex items-center px-6 py-3 bg-[#0092b8] text-white rounded-xl text-sm font-semibold shadow-lg hover:bg-[#007a99] hover:scale-105 transition-transform duration-300"
         >
-          Get Started
+          Start Your Journey
         </a>
       </div>
 
@@ -62,11 +74,11 @@ export default function ClubSphereHowItWorks({ className = "" }) {
         {steps.map((s) => (
           <li
             key={s.id}
-            className="p-6 bg-white rounded-2xl shadow-lg border border-slate-200 hover:shadow-2xl transition"
+            className="p-6 bg-white rounded-3xl shadow-md border border-slate-200 hover:shadow-2xl hover:scale-105 transition-transform duration-300"
           >
-            <div className=" flex flex-col md:flex-row items-start gap-5">
+            <div className="flex flex-col md:flex-row items-start gap-5">
               {/* ICON */}
-              <div className="h-14 w-14 flex items-center justify-center rounded-xl bg-[#0092b8]/10 text-[#0092b8]">
+              <div className="h-16 w-16 flex items-center justify-center rounded-xl bg-gradient-to-br from-[#00c3ff]/30 to-[#ffb27d]/30 text-[#0092b8] group-hover:rotate-6 transition-transform duration-300">
                 {s.icon}
               </div>
 
@@ -74,14 +86,16 @@ export default function ClubSphereHowItWorks({ className = "" }) {
               <div className="flex-1">
                 <div className="flex items-center justify-between">
                   <h3 className="text-lg font-semibold text-slate-900">{s.title}</h3>
-                  <span className="text-xs text-slate-500 font-medium">Step {s.id}</span>
+                  <span className="px-2 py-1 text-xs font-bold rounded-full bg-[#0092b8]/10 text-[#007a99]">
+                    Step {s.id}
+                  </span>
                 </div>
 
                 <p className="mt-2 text-sm text-slate-700 leading-relaxed">{s.desc}</p>
 
                 <a
                   href="#"
-                  className="mt-3 inline-block text-xs font-medium text-[#0092b8] hover:underline"
+                  className="mt-3 inline-block text-xs font-medium text-[#007a99] hover:underline"
                 >
                   Learn more
                 </a>
@@ -91,12 +105,10 @@ export default function ClubSphereHowItWorks({ className = "" }) {
         ))}
       </ol>
 
-      {/* FOOTER TIP */}
-      <footer className="mt-10 text-xs text-slate-700">
-        <p>
-          Tip: Use ClubSphere’s calendar integrations to sync events instantly for all members.
-        </p>
+      <footer className="mt-12 text-xs italic text-red-500">
+        Remember: Every event counts! Track, share, and enjoy every club moment with ClubSphere.
       </footer>
+
     </section>
   );
 }

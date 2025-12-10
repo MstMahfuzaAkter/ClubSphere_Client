@@ -44,7 +44,7 @@ const Herosection = () => {
               Hobbies are generally not done for profit, but for personal
               enjoyment and satisfaction.
             </p>
-            <Link>
+            <Link to="/Clubs">
               <button className="btn bg-cyan-600 text-white rounded-2xl px-6 py-2">
                 Explore Hobbies
               </button>
@@ -77,7 +77,7 @@ const Herosection = () => {
               Hobbies are generally not done for profit, but for personal
               enjoyment and satisfaction.
             </p>
-            <Link>
+            <Link to="/Clubs">
               <button className="btn bg-cyan-600 text-white rounded-2xl px-6 py-2">
                 Explore Hobbies
               </button>
@@ -110,7 +110,7 @@ const Herosection = () => {
               Hobbies are generally not done for profit, but for personal
               enjoyment and satisfaction.
             </p>
-            <Link>
+            <Link to="/Clubs">
               <button className="btn bg-cyan-600 text-white rounded-2xl px-6 py-2">
                 Explore Hobbies
               </button>
