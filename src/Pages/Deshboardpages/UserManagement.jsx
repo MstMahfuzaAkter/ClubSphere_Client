@@ -22,7 +22,6 @@ const UserManagement = () => {
 
   if (isLoading) return <Loadingspinner />;
 
-
   const confirmRoleChange = (user, role) => {
     toast.info(
       ({ closeToast }) => (
@@ -43,10 +42,7 @@ const UserManagement = () => {
               Yes
             </button>
 
-            <button
-              onClick={closeToast}
-              className="btn btn-xs btn-error"
-            >
+            <button onClick={closeToast} className="btn btn-xs btn-error">
               Cancel
             </button>
           </div>
@@ -55,7 +51,6 @@ const UserManagement = () => {
       { autoClose: false }
     );
   };
-
 
   const handleRoleChange = async (user, role) => {
     if (user.role === role) return;
@@ -73,73 +68,110 @@ const UserManagement = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <h3 className="text-lg font-semibold mb-4">
         Total Users: {users.length}
       </h3>
 
-      <div className="overflow-x-auto">
-        <table className="table table-zebra">
-          <thead>
+      {/* ---------- DESKTOP VIEW ---------- */}
+      <div className="hidden md:block overflow-x-auto rounded-xl border">
+        <table className="table table-zebra w-full">
+          <thead className="bg-base-200 text-base-content">
             <tr>
-              <th></th>
+              <th>#</th>
               <th>Name</th>
               <th>Email</th>
               <th>Role</th>
-
               <th>Created At</th>
               <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {users.map((user, index) => (
+            {users.map((user, i) => (
               <tr key={user._id}>
-                <th>{index + 1}</th>
+                <th>{i + 1}</th>
                 <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-
-
+                <td className="break-all">{user.email}</td>
+                <td className="capitalize">{user.role}</td>
                 <td>{new Date(user.createdAt).toLocaleDateString()}</td>
 
                 <td className="flex gap-2">
-                  {/* Admin */}
                   <button
                     disabled={user.role === "admin"}
                     onClick={() => confirmRoleChange(user, "admin")}
                     className="btn btn-xs btn-error"
-                    title="Make Admin"
                   >
-                    <FaUserShield size={18} />
+                    <FaUserShield />
                   </button>
 
-                  {/* Club Manager */}
                   <button
                     disabled={user.role === "clubManager"}
-                    onClick={() =>
-                      confirmRoleChange(user, "clubManager")
-                    }
+                    onClick={() => confirmRoleChange(user, "clubManager")}
                     className="btn btn-xs btn-warning"
-                    title="Make Club Manager"
                   >
-                    <FaUserTie size={18} />
+                    <FaUserTie />
                   </button>
 
-                  {/* Member */}
                   <button
                     disabled={user.role === "member"}
                     onClick={() => confirmRoleChange(user, "member")}
                     className="btn btn-xs btn-info"
-                    title="Make Member"
                   >
-                    <FaUsers size={18} />
+                    <FaUsers />
                   </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* ---------- MOBILE VIEW ---------- */}
+      <div className="md:hidden space-y-4 mt-4">
+        {users.map((user, i) => (
+          <div
+            key={user._id}
+            className="bg-base-100 border rounded-xl p-4 shadow"
+          >
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="font-bold text-lg">{user.name}</h3>
+              <span className="text-sm opacity-70">#{i + 1}</span>
+            </div>
+
+            <p className="text-sm break-all">📧 {user.email}</p>
+            <p className="text-sm mt-1">🎖 Role: {user.role}</p>
+            <p className="text-sm">
+              📅 Joined: {new Date(user.createdAt).toLocaleDateString()}
+            </p>
+
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              <button
+                disabled={user.role === "admin"}
+                onClick={() => confirmRoleChange(user, "admin")}
+                className="btn btn-xs w-full btn-error"
+              >
+                <FaUserShield />
+              </button>
+
+              <button
+                disabled={user.role === "clubManager"}
+                onClick={() => confirmRoleChange(user, "clubManager")}
+                className="btn btn-xs w-full btn-warning"
+              >
+                <FaUserTie />
+              </button>
+
+              <button
+                disabled={user.role === "member"}
+                onClick={() => confirmRoleChange(user, "member")}
+                className="btn btn-xs w-full btn-info"
+              >
+                <FaUsers />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import Loadingspinner from "../../Components/Shared/Loadingspinner";
-// import JoinClubSection from "../Deshboardpages/JoinClubSection";
+// import JoinClubSection from "../deshboardpages/JoinClubSection";
 
 const ClubDetails = () => {
   const { id } = useParams();
@@ -73,7 +73,7 @@ const ClubDetails = () => {
           </p>
 
           <Link to={`/clubs/${club._id}/membership`}>
-            <button className="btn bg-orange-600 text-white w-full">Join Membership</button>
+            <button className="btn bg-[#0092b8] text-white w-full">Join Membership</button>
           </Link>
 
           {club?.alreadyMember && (

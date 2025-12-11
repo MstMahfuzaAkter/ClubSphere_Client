@@ -69,7 +69,7 @@ const Events = () => {
             <div className="card-actions justify-end mt-4">
               <button
                 onClick={() => navigate(`/events/${event._id}`)}
-                className="btn bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg w-full"
+                className="btn bg-[#0092b8] hover:bg-orange-700 text-white font-bold rounded-lg w-full"
               >
                 View Details
               </button>

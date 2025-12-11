@@ -34,7 +34,7 @@ const Clubs = () => {
         {clubs.map((club) => (
           <div
             key={club._id}
-            className="card border-2 border-black bg-white shadow-xl rounded-xl overflow-hidden"
+            className="card  bg-white shadow-xl rounded-xl overflow-hidden"
           >
             <figure className="h-48 w-full">
               <img
@@ -66,7 +66,7 @@ const Clubs = () => {
               </div>
 
               <div>
-                <span className="badge bg-orange-600 text-white">
+                <span className="badge bg-[#0092b8] p-2 text-white">
                   {club.category}
                 </span>
               </div>

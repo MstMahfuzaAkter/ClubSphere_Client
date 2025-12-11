@@ -182,7 +182,7 @@ const Registation = () => {
             </div>
 
             {/* Register Button */}
-            <button className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 rounded-lg font-semibold transition">
+            <button className="w-full bg-[#0092b8]  hover:bg-orange-700 text-white py-3 rounded-lg font-semibold transition">
               Register
             </button>
           </form>

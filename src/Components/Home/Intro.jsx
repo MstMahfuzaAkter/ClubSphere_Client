@@ -28,7 +28,7 @@ const Intro = () => {
             </a>
 
             <a
-              href="/dashboard/manager/create-club" 
+              href="/deshboard/manager/create-club" 
               className="px-8 py-4 text-orange-600 bg-white border border-gray-300 rounded-xl shadow-lg hover:bg-gray-100 transition duration-300"
             >
               Launch Your Club

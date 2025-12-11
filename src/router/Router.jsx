@@ -6,18 +6,18 @@ import Login from "../Pages/Authpage/Login";
 import Registation from "../Pages/Authpage/Registation";
 import Loadingspinner from "../Components/Shared/Loadingspinner";
 import PrivateRoute from "./PrivateRoute";
-import DeshboardLayout from "../Layout/DeshboardLayout";
-import CreateClub from "../Pages/Deshboardpages/CreateClub";
-import CreateClubForm from "../Pages/Deshboardpages/CreateClubForm";
+import DeshboardLayout from "../Layout/deshboardLayout";
+import CreateClub from "../Pages/deshboardpages/CreateClub";
+import CreateClubForm from "../Pages/deshboardpages/CreateClubForm";
 import Clubs from "../Pages/Navbarpages/Clubs";
-import ManageClub from "../Pages/Deshboardpages/ManageClub";
+import ManageClub from "../Pages/deshboardpages/ManageClub";
 import AdminRouter from "./AdminRoute";
-import UserManagement from "../Pages/Deshboardpages/UserManagement";
-import CreateEvent from "../Pages/Deshboardpages/CreateEvent";
+import UserManagement from "../Pages/deshboardpages/UserManagement";
+import CreateEvent from "../Pages/deshboardpages/CreateEvent";
 import Coverage from "../Components/Map/Coverage";
 import ClubDetails from "../Pages/Navbarpages/ClubDetails";
-import ClubMembership from "../Pages/Deshboardpages/Club/ClubMembership";
-import MyClubs from "../Pages/Deshboardpages/Club/MyClubs";
+import ClubMembership from "../Pages/deshboardpages/Club/ClubMembership";
+import MyClubs from "../Pages/deshboardpages/Club/MyClubs";
 import Events from "../Pages/Navbarpages/Events";
 
 const router = createBrowserRouter([

@@ -72,13 +72,6 @@ const Navbar = () => {
           {user ? (
             <div className="relative ">
               <div className="flex items-center gap-5">
-                {/* Desktop Logout button */}
-                {/* <button
-                  onClick={() => logoutuser()}
-                  className="btn bg-[#0092b8] text-white rounded-4xl hidden md:block"
-                >
-                  LogOut
-                </button> */}
 
                 {/* Avatar Button */}
                 <button
@@ -120,7 +113,7 @@ const Navbar = () => {
               )}
             </div>
           ) : (
-            <Link to="/login" className="btn bg-orange-600 ml-2">
+            <Link to="/login" className="btn bg-[#0092b8] text-white ml-2">
               Login
             </Link>
           )}
