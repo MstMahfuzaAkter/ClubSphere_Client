@@ -17,6 +17,7 @@ import CreateEvent from "../Pages/Deshboardpages/CreateEvent";
 import ClubDetails from "../Components/Home/ClubDetails";
 import Events from "../Components/Home/Event/Events";
 import EventDetails from "../Components/Home/Event/EventDetails";
+import Coverage from "../Components/Map/Coverage";
 
 const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
         path: '/club/:id',
         element: <ClubDetails />,
       },
+      {
+        path:'/coverage',
+        element:<Coverage></Coverage>
+      }
     ],
   },
 

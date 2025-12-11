@@ -50,9 +50,11 @@ const ClubCard = ({ c }) => {
         <span className="flex items-center gap-1">
           <FiUsers /> {membershipFee === 0 ? "Free" : `$${membershipFee}`}
         </span>
-        <span className="flex items-center gap-1">
-          <FiMapPin /> {location || "Unknown"}
-        </span>
+        <Link to='/coverage'>
+          <span className="flex items-center gap-1">
+            <FiMapPin /> {location || "Unknown"}
+          </span>
+        </Link>
       </div>
 
       {/* Status */}

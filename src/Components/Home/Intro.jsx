@@ -7,7 +7,7 @@ const Intro = () => {
         <div className="max-w-7xl mx-auto px-6 text-center">
          
           {/* Heading */}
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+          <h1 className="text-4xl md:text-4xl font-extrabold text-gray-900 leading-tight">
             Join & Flourish in
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0092b8] to-orange-600">
               {" "}Vibrant Local Clubs
