@@ -57,7 +57,7 @@ const Navbar = () => {
           </Link>
 
           <Link to='/'>
-            <h1 className="btn btn-ghost text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ClubSphere</h1>
+            <h1 className="btn btn-ghost text-[15px] lg:text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ClubSphere</h1>
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -65,9 +65,8 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end">
-          <div className="mr-3.5">
-            <ThemeToggle></ThemeToggle>
-          </div>
+            <ThemeToggle className="w-2 h-2" />
+          
 
           {user ? (
             <div className="relative ">

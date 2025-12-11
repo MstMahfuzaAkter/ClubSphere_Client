@@ -18,7 +18,7 @@ const FeaturedClubs = () => {
 
     return (
         <div className="pt-12">
-            <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-[#0092b8] to-orange-600 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
                 Featured Clubs
             </h2>
             <motion.div
