@@ -103,6 +103,7 @@ const CreateClubForm = () => {
               <option value="Hiking">Hiking</option>
               <option value="Music">Music</option>
               <option value="Gaming">Gaming</option>
+              <option value="Gaming">Book</option>
             </select>
             {errors.category && (
               <p className="text-red-500 text-sm mt-1 dark:text-red-400">

@@ -61,7 +61,7 @@ const Clubs = () => {
                   <FiDollarSign />
                   {club.membershipFee === 0
                     ? "Free"
-                    : `$${club.membershipFee}`}
+                    : `${club.membershipFee}`}
                 </span>
               </div>
 
