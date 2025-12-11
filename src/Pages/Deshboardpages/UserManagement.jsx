@@ -22,7 +22,7 @@ const UserManagement = () => {
 
   if (isLoading) return <Loadingspinner />;
 
- 
+
   const confirmRoleChange = (user, role) => {
     toast.info(
       ({ closeToast }) => (
@@ -56,7 +56,7 @@ const UserManagement = () => {
     );
   };
 
- 
+
   const handleRoleChange = async (user, role) => {
     if (user.role === role) return;
 
