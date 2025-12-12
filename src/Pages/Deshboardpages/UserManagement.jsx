@@ -147,9 +147,9 @@ const UserManagement = () => {
 
             <div className="grid grid-cols-3 gap-2 mt-3">
               <button
-                disabled={user.role === "admin"}
+                disabled={user.role === "admin"} 
                 onClick={() => confirmRoleChange(user, "admin")}
-                className="btn btn-xs w-full btn-error"
+                className="btn btn-xs w-full btn-error "
               >
                 <FaUserShield />
               </button>

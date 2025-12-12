@@ -6,11 +6,7 @@ import { toast } from "react-toastify";
 const ManageClub = () => {
   const axiosSecure = useAxiosSecure();
 
-  const {
-    data: clubs = [],
-    isPending,
-    refetch,
-  } = useQuery({
+  const { data: clubs = [], isPending, refetch } = useQuery({
     queryKey: ["Approve", "pending"],
     queryFn: async () => {
       const res = await axiosSecure.get("/clubs");
@@ -20,33 +16,31 @@ const ManageClub = () => {
 
   const handleclubaprove = async (club) => {
     const updatestatus = { status: "aproved" };
-    await axiosSecure.patch(`/clubs/${club._id}/status`, updatestatus)
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          refetch();
-          toast.success("Club approved successfully!");
-        }
-      });
+    const res = await axiosSecure.patch(`/clubs/${club._id}/status`, updatestatus);
+
+    if (res.data.modifiedCount) {
+      refetch();
+      toast.success("Club approved successfully!");
+    }
   };
 
   const handleclubreject = async (club) => {
     const updatestatus = { status: "rejected" };
-    await axiosSecure.patch(`/clubs/${club._id}/status`, updatestatus)
-      .then((res) => {
-        if (res.data.modifiedCount) {
-          refetch();
-          toast.success("Club rejected successfully!");
-        }
-      });
+    const res = await axiosSecure.patch(`/clubs/${club._id}/status`, updatestatus);
+
+    if (res.data.modifiedCount) {
+      refetch();
+      toast.success("Club rejected successfully!");
+    }
   };
 
   return (
     <div className="w-full">
-      {/* For Desktop/Tablets */}
-      <div className="hidden md:block overflow-x-auto rounded-lg ">
-        <table className="table table-zebra w-full">
-          <thead>
-            <tr className="bg-gray-100 text-gray-700">
+      {/* Desktop / Tablet Table */}
+      <div className="hidden md:block overflow-x-auto rounded-lg">
+        <table className="table table-zebra w-full bg-base-100 text-base-content">
+          <thead className="bg-base-200 text-base-content font-semibold">
+            <tr>
               <th>#</th>
               <th>Club Name</th>
               <th>Manager Email</th>
@@ -58,7 +52,7 @@ const ManageClub = () => {
 
           <tbody>
             {clubs.map((club, index) => (
-              <tr key={club._id}>
+              <tr key={club._id} className="hover:bg-base-200">
                 <th>{index + 1}</th>
                 <td>{club.clubName}</td>
                 <td>{club.managerEmail}</td>
@@ -94,25 +88,27 @@ const ManageClub = () => {
         </table>
       </div>
 
-      {/* For Mobile View: Card Layout */}
-      <div className="md:hidden space-y-4 mt-4">
+      {/* Mobile View → Card Layout */}
+      <div className="md:hidden space-y-4 mt-5">
         {clubs.map((club, index) => (
           <div
             key={club._id}
-            className="bg-white shadow-md rounded-lg p-4 border"
+            className="bg-base-100 text-base-content shadow-md rounded-lg p-4 border border-base-300"
           >
             <h3 className="font-bold text-lg">{club.clubName}</h3>
-            <p className="text-sm text-gray-600">
-              Manager: {club.managerEmail}
-            </p>
+
+            <p className="text-sm opacity-90">Manager: {club.managerEmail}</p>
+
             <p className="text-sm mt-1">
-              Status: <span className="font-semibold capitalize">{club.status}</span>
+              Status:{" "}
+              <span className="font-semibold capitalize">{club.status}</span>
             </p>
+
             <p className="text-sm">Fee: Free</p>
 
             <div className="flex flex-col gap-2 mt-3">
               {(club.status === "aproved" || club.status === "rejected") ? (
-                <button className="btn btn-sm btn-info">View Stats</button>
+                <button className="btn btn-sm btn-info w-full">View Stats</button>
               ) : (
                 <>
                   <button
@@ -129,7 +125,9 @@ const ManageClub = () => {
                     Reject
                   </button>
 
-                  <button className="btn btn-sm btn-info w-full">View Stats</button>
+                  <button className="btn btn-sm btn-info w-full">
+                    View Stats
+                  </button>
                 </>
               )}
             </div>

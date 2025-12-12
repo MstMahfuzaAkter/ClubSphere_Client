@@ -3,9 +3,9 @@ import { Link, Outlet } from "react-router";
 import { IoIosCreate } from "react-icons/io";
 import useRole from "../router/useRole";
 import { FaUser } from "react-icons/fa";
-import { MdManageHistory } from "react-icons/md";
+import { MdGroups2, MdManageHistory } from "react-icons/md";
 import { MdCreateNewFolder } from "react-icons/md";
-
+import { FiCalendar } from "react-icons/fi";
 
 const DeshboardLayout = () => {
   const { role } = useRole();
@@ -108,18 +108,54 @@ const DeshboardLayout = () => {
                 <Link to="/deshboard/manager/create-event">
                   <button
                     className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="create a event"
+                    data-tip="My Clubs"
                   >
-                    {/* create club icoon */}
-                    {/* <IoIosCreate className="w-6 h-6" /> */}
-                    
-                    <MdCreateNewFolder className="w-6 h-6"/>
+
+
+                    <MdCreateNewFolder className="w-6 h-6" />
                     <span className="is-drawer-close:hidden">
-                      create a event
+                      My Clubs
                     </span>
                   </button>
                 </Link>
               </li>
+              <li>
+                <Link to="/deshboard/manager/ClubMembersPanel">
+                  <button
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="ClubMembersPanel"
+                  >
+                    <MdGroups2 className="w-6 h-6" />
+
+
+                    {/* <BsCollectionFill  /> */}
+
+                    <span className="is-drawer-close:hidden">
+                      ClubMembersPanel
+                    </span>
+                  </button>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/deshboard/manager/event-mangemnet">
+                  <button
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="event managemnet"
+                  >
+                    {/* <MdGroups2 className="w-6 h-6"/> */}
+                    <FiCalendar className="w-6 h-6" />
+
+
+                    {/* <BsCollectionFill  /> */}
+
+                    <span className="is-drawer-close:hidden">
+                      event managemnet
+                    </span>
+                  </button>
+                </Link>
+              </li>
+
 
               {role === "admin" && (
                 <>

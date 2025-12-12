@@ -22,87 +22,87 @@ const MyClubs = () => {
 
 
   const handleedit = async (data) => {
-  try {
-    let imageUrl = selectedClub.bannerImage;
+    try {
+      let imageUrl = selectedClub.bannerImage;
 
-    
-    if (data.bannerImage && data.bannerImage[0]) {
-      const formData = new FormData();
-      formData.append("image", data.bannerImage[0]);
 
-      const imgRes = await fetch(
-        `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_HOST_KEY}`,
-        {
-          method: "POST",
-          body: formData,
-        }
+      if (data.bannerImage && data.bannerImage[0]) {
+        const formData = new FormData();
+        formData.append("image", data.bannerImage[0]);
+
+        const imgRes = await fetch(
+          `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_HOST_KEY}`,
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const imgData = await imgRes.json();
+        imageUrl = imgData.data.url;
+      }
+
+      // ✅ Updated data object
+      const updateClubInfo = {
+        clubName: data.clubName,
+        description: data.description,
+        category: data.category,
+        location: data.location,
+        membershipFee: Number(data.membershipFee),
+        bannerImage: imageUrl,
+        updatedAt: new Date(),
+      };
+
+      // ✅ PATCH request
+      const res = await axiosSecure.patch(
+        `/clubs/${selectedClub._id}`,
+        updateClubInfo
       );
 
-      const imgData = await imgRes.json();
-      imageUrl = imgData.data.url;
+      if (res.data.modifiedCount > 0) {
+        Swal.fire("Success", "Club updated successfully", "success");
+        refetch();
+
+        document.getElementById("my_modal_5").close();
+        setSelectedClub(null);
+
+
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Failed to update club", "error");
     }
+  };
 
-    // ✅ Updated data object
-    const updateClubInfo = {
-      clubName: data.clubName,
-      description: data.description,
-      category: data.category,
-      location: data.location,
-      membershipFee: Number(data.membershipFee),
-      bannerImage: imageUrl,
-      updatedAt: new Date(),
-    };
 
-    // ✅ PATCH request
-    const res = await axiosSecure.patch(
-      `/clubs/${selectedClub._id}`,
-      updateClubInfo
-    );
+  /* handle delete here */
 
-    if (res.data.modifiedCount > 0) {
-      Swal.fire("Success", "Club updated successfully", "success");
-      refetch();
+  const handleDelete = async (id) => {
+    const confirm = await Swal.fire({
+      title: "Are you sure?",
+      text: "This club will be deleted permanently!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
 
-      document.getElementById("my_modal_5").close();
-      setSelectedClub(null);
+    if (!confirm.isConfirmed) return;
 
-    
+    try {
+      const res = await axiosSecure.delete(`/clubs/${id}`);
+
+      if (res.data.deletedCount > 0) {
+        Swal.fire("Deleted!", "Club has been deleted.", "success");
+
+
+        refetch();
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Error", "Failed to delete club", "error");
     }
-  } catch (error) {
-    console.error(error);
-    Swal.fire("Error", "Failed to update club", "error");
-  }
-};
-
-
-/* handle delete here */
-
-const handleDelete = async (id) => {
-  const confirm = await Swal.fire({
-    title: "Are you sure?",
-    text: "This club will be deleted permanently!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-  });
-
-  if (!confirm.isConfirmed) return;
-
-  try {
-    const res = await axiosSecure.delete(`/clubs/${id}`);
-
-    if (res.data.deletedCount > 0) {
-      Swal.fire("Deleted!", "Club has been deleted.", "success");
-
-      
-      refetch();
-    }
-  } catch (error) {
-    console.error(error);
-    Swal.fire("Error", "Failed to delete club", "error");
-  }
-};
+  };
 
 
   /* use react hook form */
@@ -119,7 +119,13 @@ const handleDelete = async (id) => {
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">My Clubs</h2>
-
+      <Link to="/deshboard/manager/create-club">
+        <div className="mt-4">
+          <button className="btn bg-orange-600 text-white font-bold">
+            Create New Club
+          </button>
+        </div>
+      </Link>
       <div className="overflow-x-auto">
         <table className="table table-zebra w-full">
           {/* head */}
@@ -173,7 +179,7 @@ const handleDelete = async (id) => {
                     <button onClick={() => handleDelete(club._id)} className="btn btn-sm btn-error">Delete</button>
                   </td>
 
-                  
+
                 </td>
               </tr>
             ))}
@@ -189,142 +195,136 @@ const handleDelete = async (id) => {
         </table>
       </div>
 
-      <Link to="/deshboard/manager/create-club">
-        <div className="mt-4">
-          <button className="btn bg-orange-600 text-white font-bold">
-            Create New Club
-          </button>
-        </div>
-      </Link>
+  
 
       {/* club modal here */}
 
       {/* Open the modal using document.getElementById('ID').showModal() method */}
-       <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
-      <div className="modal-box">
-        <h3 className="font-bold text-lg mb-3">Edit Club</h3>
+      <dialog id="my_modal_5" className="modal modal-bottom sm:modal-middle">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg mb-3">Edit Club</h3>
 
-        {selectedClub ? (
-          <form
-           onSubmit={handleSubmit(handleedit)}
-           
-            className="space-y-4 lg:space-y-6"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {selectedClub ? (
+            <form
+              onSubmit={handleSubmit(handleedit)}
 
-              {/* Club Name */}
-              <div className="form-control">
-                <label className="label font-semibold">Club Name</label>
-                <input
-                  className="input input-bordered w-full"
-                  {...register("clubName", { required: "Club Name is required" })}
-                />
-                {errors.clubName && (
-                  <p className="text-red-500 text-sm">
-                    {errors.clubName.message}
-                  </p>
-                )}
+              className="space-y-4 lg:space-y-6"
+            >
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+
+                {/* Club Name */}
+                <div className="form-control">
+                  <label className="label font-semibold">Club Name</label>
+                  <input
+                    className="input input-bordered w-full"
+                    {...register("clubName", { required: "Club Name is required" })}
+                  />
+                  {errors.clubName && (
+                    <p className="text-red-500 text-sm">
+                      {errors.clubName.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Category */}
+                <div className="form-control">
+                  <label className="label font-semibold flex items-center gap-2">
+                    <FiTag /> Category
+                  </label>
+                  <select
+                    className="select select-bordered w-full"
+                    {...register("category", { required: "Category is required" })}
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Photography">Photography</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Hiking">Hiking</option>
+                    <option value="Music">Music</option>
+                    <option value="Gaming">Gaming</option>
+                  </select>
+                  {errors.category && (
+                    <p className="text-red-500 text-sm">
+                      {errors.category.message}
+                    </p>
+                  )}
+                </div>
+
+                {/* Location */}
+                <div className="form-control">
+                  <label className="label font-semibold flex items-center gap-2">
+                    <FiMapPin /> Location
+                  </label>
+                  <input
+                    className="input input-bordered w-full"
+                    {...register("location", { required: "Location is required" })}
+                  />
+                </div>
+
+                {/* Membership Fee */}
+                <div className="form-control">
+                  <label className="label font-semibold flex items-center gap-2">
+                    <FiDollarSign /> Membership Fee
+                  </label>
+                  <input
+                    type="number"
+                    min={0}
+                    className="input input-bordered w-full"
+                    {...register("membershipFee", {
+                      required: "Membership fee required",
+                    })}
+                  />
+                </div>
               </div>
 
-              {/* Category */}
+              {/* Description */}
               <div className="form-control">
-                <label className="label font-semibold flex items-center gap-2">
-                  <FiTag /> Category
-                </label>
-                <select
-                  className="select select-bordered w-full"
-                  {...register("category", { required: "Category is required" })}
-                >
-                  <option value="">Select Category</option>
-                  <option value="Photography">Photography</option>
-                  <option value="Sports">Sports</option>
-                  <option value="Tech">Tech</option>
-                  <option value="Hiking">Hiking</option>
-                  <option value="Music">Music</option>
-                  <option value="Gaming">Gaming</option>
-                </select>
-                {errors.category && (
-                  <p className="text-red-500 text-sm">
-                    {errors.category.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Location */}
-              <div className="form-control">
-                <label className="label font-semibold flex items-center gap-2">
-                  <FiMapPin /> Location
-                </label>
-                <input
-                  className="input input-bordered w-full"
-                  {...register("location", { required: "Location is required" })}
-                />
-              </div>
-
-              {/* Membership Fee */}
-              <div className="form-control">
-                <label className="label font-semibold flex items-center gap-2">
-                  <FiDollarSign /> Membership Fee
-                </label>
-                <input
-                  type="number"
-                  min={0}
-                  className="input input-bordered w-full"
-                  {...register("membershipFee", {
-                    required: "Membership fee required",
+                <label className="label font-semibold">Description</label>
+                <textarea
+                  rows={3}
+                  className="textarea textarea-bordered w-full"
+                  {...register("description", {
+                    required: "Description is required",
                   })}
+                ></textarea>
+              </div>
+
+              {/* Banner Image (optional on edit) */}
+              <div className="form-control">
+                <label className="label font-semibold flex items-center gap-2">
+                  <FiUpload /> Change Banner (optional)
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="file-input file-input-bordered w-full"
+                  {...register("bannerImage")}
                 />
               </div>
-            </div>
 
-            {/* Description */}
-            <div className="form-control">
-              <label className="label font-semibold">Description</label>
-              <textarea
-                rows={3}
-                className="textarea textarea-bordered w-full"
-                {...register("description", {
-                  required: "Description is required",
-                })}
-              ></textarea>
-            </div>
+              {/* Buttons */}
+              <div className="modal-action">
+                <button type="submit" className="btn btn-success">
+                  Update
+                </button>
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() =>
+                    document.getElementById("my_modal_5").close()
+                  }
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          ) : (
+            <Loadingspinner></Loadingspinner>
+          )}
+        </div>
+      </dialog>
 
-            {/* Banner Image (optional on edit) */}
-            <div className="form-control">
-              <label className="label font-semibold flex items-center gap-2">
-                <FiUpload /> Change Banner (optional)
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                className="file-input file-input-bordered w-full"
-                {...register("bannerImage")}
-              />
-            </div>
 
-            {/* Buttons */}
-            <div className="modal-action">
-              <button type="submit" className="btn btn-success">
-                Update
-              </button>
-              <button
-                type="button"
-                className="btn"
-                onClick={() =>
-                  document.getElementById("my_modal_5").close()
-                }
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        ) : (
-          <Loadingspinner></Loadingspinner>
-        )}
-      </div> 
-    </dialog>
-
-     
     </div>
   );
 };
