@@ -9,7 +9,7 @@ const FeaturedClubs = () => {
     const { data: clubs = [], isLoading } = useQuery({
         queryKey: ['clubs'],
         queryFn: async () => {
-             const result = await axios(`${import.meta.env.VITE_API_URL}/clubs`)
+             const result = await axios(`${import.meta.env.VITE_API_URL}/clubs/approved`)
             return result.data;
         },
     });

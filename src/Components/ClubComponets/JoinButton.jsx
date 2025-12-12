@@ -1,6 +1,6 @@
+import { toast } from "react-toastify";
 import useAuth from "../../Hook/useAuth";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { toast } from "react-toastify";
 
 const JoinButton = ({ club, refetch }) => {
   const axiosSecure = useAxiosSecure();

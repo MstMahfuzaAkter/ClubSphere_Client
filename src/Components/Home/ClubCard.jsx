@@ -10,7 +10,6 @@ const ClubCard = ({ c }) => {
     location,
     bannerImage,
     membershipFee,
-    status,
   } = c || {};
 
   return (

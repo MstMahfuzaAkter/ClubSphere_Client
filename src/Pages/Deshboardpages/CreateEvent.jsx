@@ -4,146 +4,160 @@ import { FiCalendar, FiMapPin, FiDollarSign, FiUsers } from "react-icons/fi";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import useAuth from "../../Hook/useAuth";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
-const CreateEvent = ({ clubId }) => {
+const CreateEvent = () => {
   const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
-  const [isPaid, setIsPaid] = useState(false);
+
+  const [selectedClub, setSelectedClub] = useState("choose a club");
+
+  const { data: clubs = [] } = useQuery({
+    queryKey: ["clubs"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/clubs/approved-by-email");
+      return res.data;
+    },
+  });
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
+
+    console.log(data);
     try {
-      const eventInfo = {
-        clubId,
-        title: data.title,
-        description: data.description,
-        eventDate: new Date(data.eventDate), // ensure date stored as Date
-        location: data.location,
-        isPaid,
-        eventFee: isPaid ? Number(data.eventFee) : 0,
-        maxAttendees: data.maxAttendees ? Number(data.maxAttendees) : undefined,
+      const res = await axiosSecure.post("/events", {
+        ...data,
+        isPaid: data.isPaid || false,
+        eventFee: data.isPaid ? Number(data.eventFee) : 0,
+        maxAttendees: data.maxAttendees ? Number(data.maxAttendees) : null,
         createdAt: new Date(),
         createdBy: user?.email,
-      };
+          
 
-      const res = await axiosSecure.post("/events", eventInfo);
+      });
 
-      if (res.data.insertedId) {
-        toast.success("Event created successfully ✅");
+      if (res.data) {
+        toast.success("Event created successfully!");
         reset();
-        setIsPaid(false);
+        setSelectedClub("choose a club");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Failed to create event ❌");
+      toast.error("Failed to create event");
     }
   };
 
+  
+
   return (
-    <div className="w-full max-w-md lg:max-w-3xl mx-auto bg-white shadow-xl rounded-xl p-6 lg:p-10 space-y-6">
+    <div className="w-full max-w-md lg:max-w-3xl mx-auto bg-white shadow-xl rounded-xl p-6 space-y-6">
       <h2 className="text-xl lg:text-3xl font-bold text-center">
         Create New Event
       </h2>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 lg:space-y-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
-          {/* Event Title */}
-          <div className="form-control">
-            <label className="label font-semibold">Event Title</label>
-            <input
-              className="input input-bordered w-full"
-              placeholder="Photography Workshop"
-              {...register("title", { required: "Event title is required" })}
-            />
-            {errors.title && <p className="text-red-500 text-sm">{errors.title.message}</p>}
-          </div>
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-          {/* Event Date */}
-          <div className="form-control">
-            <label className="label font-semibold flex items-center gap-2">
-              <FiCalendar /> Event Date
-            </label>
-            <input
-              type="date"
-              className="input input-bordered w-full"
-              {...register("eventDate", { required: "Event date is required" })}
-            />
-          </div>
-
-          {/* Location */}
-          <div className="form-control">
-            <label className="label font-semibold flex items-center gap-2">
-              <FiMapPin /> Location
-            </label>
-            <input
-              className="input input-bordered w-full"
-              placeholder="Dhaka, Bangladesh"
-              {...register("location", { required: "Location required" })}
-            />
-          </div>
-
-          {/* Max Attendees */}
-          <div className="form-control">
-            <label className="label font-semibold flex items-center gap-2">
-              <FiUsers /> Max Attendees
-            </label>
-            <input
-              type="number"
-              min={1}
-              className="input input-bordered w-full"
-              placeholder="Optional"
-              {...register("maxAttendees")}
-            />
-          </div>
+        {/* event title */}
+        <div className="form-control">
+          <label className="label font-semibold">Event Title</label>
+          <input
+            className="input input-bordered w-full"
+            {...register("title", { required: "Event title is required" })}
+          />
+          {errors.title && <p className="text-red-500">{errors.title.message}</p>}
         </div>
 
-        {/* Paid Toggle */}
+        {/* date */}
+        <div className="form-control">
+          <label className="label font-semibold">Event Date</label>
+          <input
+            type="date"
+            className="input input-bordered w-full"
+            {...register("eventDate", { required: "Event date is required" })}
+          />
+        </div>
+
+        {/* dropdown for club */}
+        <div>
+          <details className="dropdown">
+            <summary className="btn w-full text-left">{selectedClub}</summary>
+            <ul className="menu dropdown-content bg-base-100 rounded-box w-52 p-2 shadow-lg">
+              {clubs.map((club) => (
+                <li key={club._id}>
+                  <a
+                    onClick={() => {
+                      setSelectedClub(club.clubName);
+                      setValue("clubId", club._id); 
+                    }}
+                  >
+                    {club.clubName}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
+
+          {/* hidden field for react-hook-form */}
+          <input
+            type="hidden"
+            {...register("clubId", { required: true })}
+          />
+
+          {errors.clubId && (
+            <p className="text-red-500 text-sm">Please select a club</p>
+          )}
+        </div>
+
+        {/* location */}
+        <div className="form-control">
+          <label className="label font-semibold">Location</label>
+          <input
+            className="input input-bordered w-full"
+            {...register("location", { required: "Location is required" })}
+          />
+        </div>
+
+        {/* paid toggle */}
         <div className="form-control">
           <label className="label cursor-pointer gap-3">
-            <span className="label-text font-semibold">Is this a paid event?</span>
+            <span className="font-semibold">Is this a paid event?</span>
             <input
               type="checkbox"
               className="toggle toggle-primary"
-              onChange={(e) => setIsPaid(e.target.checked)}
+              {...register("isPaid")}
             />
           </label>
         </div>
 
-        {/* Event Fee */}
-        {isPaid && (
-          <div className="form-control">
-            <label className="label font-semibold flex items-center gap-2">
-              <FiDollarSign /> Event Fee
-            </label>
-            <input
-              type="number"
-              min={0}
-              className="input input-bordered w-full"
-              placeholder="Enter event fee"
-              {...register("eventFee", { required: "Event fee required" })}
-            />
-          </div>
-        )}
+        {/* fee */}
+        <div className="form-control">
+          <label className="label font-semibold">Event Fee</label>
+          <input
+            type="number"
+            className="input input-bordered w-full"
+            placeholder="Enter fee (if free insert = 0)"
+            {...register("eventFee")}
+          />
+        </div>
 
-        {/* Description */}
+        {/* description */}
         <div className="form-control">
           <label className="label font-semibold">Description</label>
           <textarea
             rows={3}
             className="textarea textarea-bordered w-full"
-            {...register("description", { required: "Description required" })}
+            {...register("description", { required: "Description is required" })}
           />
         </div>
 
-        <button className="btn btn-primary w-full text-lg py-3">
-          Create Event
-        </button>
+        <button className="btn btn-primary w-full">Create Event</button>
       </form>
     </div>
   );
