@@ -24,7 +24,6 @@ const Registation = () => {
       .then((res) => {
         const firebaseUser = res.user;
 
-        // Upload profile image to imgbb
         const formData = new FormData();
         formData.append("image", profilephoto);
         const imguri = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMG_HOST_KEY}`;
@@ -33,30 +32,25 @@ const Registation = () => {
           .post(imguri, formData)
           .then((result) => {
             const profileimage = result.data.data.url;
-
             const updateprofiledata = {
               displayName: data.name,
               photoURL: profileimage,
             };
 
-            // Update Firebase profile
             updateprofile(updateprofiledata)
               .then(async () => {
-                // Prepare user info for backend
                 const userinfo = {
                   name: updateprofiledata.displayName,
                   email: firebaseUser.email,
                   photo: updateprofiledata.photoURL,
                 };
 
-                // Send to backend without JWT (new user)
                 try {
                   const res = await axios.post(
                     "http://localhost:3000/users",
                     userinfo
                   );
                   if (res.data.insertedId) {
-                    console.log("User created in the database");
                     toast.success("Signup successful!");
                   } else if (res.data.message === "user exists") {
                     toast.info("User already exists in database");
@@ -84,15 +78,15 @@ const Registation = () => {
 
   return (
     <div>
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="bg-gray-800 w-full max-w-md p-8 rounded-2xl shadow-2xl border border-gray-700">
-          <h2 className="text-3xl font-bold text-center text-teal-400 mb-2">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100">
+        <div className="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg border border-gray-200">
+          <h2 className="text-3xl font-bold text-center text-teal-600 mb-2">
             Create your account
           </h2>
 
-          <p className="text-center text-sm text-gray-400 mb-6">
+          <p className="text-center text-sm text-gray-600 mb-6">
             Already have an account?
-            <Link to="/login" className="text-blue-400 hover:underline">
+            <Link to="/login" className="text-teal-600 hover:underline">
               {" "}
               Login here
             </Link>
@@ -101,11 +95,11 @@ const Registation = () => {
           <form onSubmit={handleSubmit(handleregister)} className="space-y-5">
             {/* Name */}
             <div>
-              <label className="text-gray-300 text-sm">Full Name</label>
+              <label className="text-gray-700 text-sm">Full Name</label>
               <input
                 type="text"
                 placeholder="Enter your name"
-                className="w-full mt-1 bg-gray-900 border border-gray-700 text-gray-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-teal-500 outline-none"
+                className="w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 px-4 py-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none"
                 {...register("name", { required: true })}
               />
               {errors.name && (
@@ -115,11 +109,11 @@ const Registation = () => {
 
             {/* Email */}
             <div>
-              <label className="text-gray-300 text-sm">Email address</label>
+              <label className="text-gray-700 text-sm">Email address</label>
               <input
                 type="email"
                 placeholder="Enter email address"
-                className="w-full mt-1 bg-gray-900 border border-gray-700 text-gray-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-teal-500 outline-none"
+                className="w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 px-4 py-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none"
                 {...register("email", { required: true })}
               />
               {errors.email && (
@@ -129,11 +123,11 @@ const Registation = () => {
 
             {/* Photo Upload */}
             <div>
-              <label className="text-gray-300 text-sm">Profile Photo</label>
+              <label className="text-gray-700 text-sm">Profile Photo</label>
               <input
                 type="file"
                 accept="image/*"
-                className="w-full mt-1 bg-gray-900 border border-gray-700 text-gray-300 px-4 py-2 rounded-lg cursor-pointer"
+                className="w-full mt-1 bg-gray-50 border border-gray-300 text-gray-900 px-4 py-2 rounded-lg cursor-pointer"
                 {...register("photo", { required: true })}
               />
               {errors.photo && (
@@ -143,12 +137,12 @@ const Registation = () => {
 
             {/* Password */}
             <div>
-              <label className="text-gray-300 text-sm">Password</label>
+              <label className="text-gray-700 text-sm">Password</label>
               <div className="relative mt-1">
                 <input
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter Password"
-                  className="w-full bg-gray-900 border border-gray-700 text-gray-200 px-4 py-3 rounded-lg focus:ring-2 focus:ring-teal-500 outline-none"
+                  className="w-full bg-gray-50 border border-gray-300 text-gray-900 px-4 py-3 rounded-lg focus:ring-2 focus:ring-teal-400 outline-none"
                   {...register("password", {
                     required: true,
                     minLength: 6,
@@ -174,7 +168,7 @@ const Registation = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-200"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-900"
                 >
                   {showPassword ? "Hide" : "Show"}
                 </button>
@@ -182,22 +176,22 @@ const Registation = () => {
             </div>
 
             {/* Register Button */}
-            <button className="w-full bg-[#0092b8]  hover:bg-orange-700 text-white py-3 rounded-lg font-semibold transition">
+            <button className="w-full bg-[#0092b8] text-white hover:bg-teal-600  py-3 rounded-lg font-semibold transition">
               Register
             </button>
           </form>
 
           {/* Divider */}
           <div className="flex items-center my-6">
-            <div className="flex-grow border-t border-gray-600"></div>
-            <span className="px-3 text-gray-400 text-sm">OR</span>
-            <div className="flex-grow border-t border-gray-600"></div>
+            <div className="flex-grow border-t border-gray-300"></div>
+            <span className="px-3 text-gray-500 text-sm">OR</span>
+            <div className="flex-grow border-t border-gray-300"></div>
           </div>
 
           {/* Google Login */}
           <button
             onClick={handlegooglelogin}
-            className="w-full border border-gray-700 text-gray-200 py-3 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-700 transition"
+            className="w-full border border-gray-300 text-gray-900 py-3 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-100 transition"
           >
             <img
               src="https://www.svgrepo.com/show/355037/google.svg"

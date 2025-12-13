@@ -62,7 +62,7 @@ export default function ClubSphereHowItWorks({ className = "" }) {
         </div>
 
         <a
-          href="/Clubs"
+          href="/login"
           className="inline-flex items-center px-6 py-3 bg-[#0092b8] text-white rounded-xl text-sm font-semibold shadow-lg hover:bg-[#007a99] hover:scale-105 transition-transform duration-300"
         >
           Start Your Journey

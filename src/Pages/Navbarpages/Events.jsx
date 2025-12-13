@@ -26,14 +26,6 @@ const Events = () => {
           key={event._id}
           className="card border-2 border-gray-200 bg-white shadow-2xl rounded-2xl overflow-hidden hover:shadow-orange-300 transition-shadow duration-300"
         >
-         {/*  <figure className="h-60 w-full overflow-hidden">
-            <img
-              src={event.eventImage || "https://via.placeholder.com/400x300"}
-              alt={event.title}
-              className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
-            />
-          </figure> */}
-
           <div className="card-body space-y-4 p-6">
             <h2 className="card-title text-xl lg:text-2xl font-bold">
               {event.title}
@@ -61,7 +53,7 @@ const Events = () => {
                 <strong>Date:</strong>{" "}
                 {new Date(event.eventDate).toLocaleDateString()}
               </span>
-              <span> 
+              <span>
                 <strong className="pl-2.5">By:</strong> {event.createdBy}
               </span>
             </div>

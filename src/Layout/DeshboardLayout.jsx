@@ -6,6 +6,7 @@ import { FaUser } from "react-icons/fa";
 import { MdGroups2, MdManageHistory } from "react-icons/md";
 import { MdCreateNewFolder } from "react-icons/md";
 import { FiCalendar } from "react-icons/fi";
+import { FaRegIdBadge } from "react-icons/fa6";
 
 const DeshboardLayout = () => {
   const { role } = useRole();
@@ -98,7 +99,7 @@ const DeshboardLayout = () => {
                     {/* create club icoon */}
                     <IoIosCreate className="w-6 h-6" />
                     <span className="is-drawer-close:hidden">
-                      create a club
+                      Create A Club
                     </span>
                   </button>
                 </Link>
@@ -150,12 +151,29 @@ const DeshboardLayout = () => {
                     {/* <BsCollectionFill  /> */}
 
                     <span className="is-drawer-close:hidden">
-                      event managemnet
+                      Event Managemnet
                     </span>
                   </button>
                 </Link>
               </li>
+              <li>
+                <Link to="/deshboard/manager/event-registrations">
+                  <button
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="event-registrations"
+                  >
+                    {/* <MdGroups2 className="w-6 h-6"/> */}
+                    {/* <FiCalendar className="w-6 h-6" /> */}
+                    <FaRegIdBadge className="w-6 h-6" />
 
+                    {/* <BsCollectionFill  /> */}
+
+                    <span className="is-drawer-close:hidden">
+                      Event-Registrations
+                    </span>
+                  </button>
+                </Link>
+              </li>
 
               {role === "admin" && (
                 <>
@@ -167,7 +185,7 @@ const DeshboardLayout = () => {
                       >
                         <FaUser className="w-6 h-6" />
                         <span className="is-drawer-close:hidden">
-                          mange users
+                          Manage Users
                         </span>
                       </button>
                     </Link>
@@ -181,7 +199,7 @@ const DeshboardLayout = () => {
                       >
                         <MdManageHistory className="w-6 h-6" />
                         <span className="is-drawer-close:hidden">
-                          mange clubs
+                          Manage Clubs
                         </span>
                       </button>
                     </Link>

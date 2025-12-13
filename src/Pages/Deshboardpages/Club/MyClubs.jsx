@@ -5,13 +5,14 @@ import { Link } from "react-router";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { FiMapPin, FiDollarSign, FiTag, FiUpload } from "react-icons/fi";
+import Loadingspinner from "../../../Components/Shared/Loadingspinner";
 
 
 const MyClubs = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedClub, setSelectedClub] = useState(null);
 
-  const { data: myclubs = [], refetch } = useQuery({
+  const { data: myclubs = [], refetch, isLoading } = useQuery({
     queryKey: ["myclubs"],
     queryFn: async () => {
       const res = await axiosSecure.get("/myclubs");
@@ -115,7 +116,9 @@ const MyClubs = () => {
   } = useForm()
 
   // console.log(myclubs);
-
+  if (isLoading) {
+    return <Loadingspinner></Loadingspinner>
+  }
   return (
     <div className="p-4">
       <h2 className="text-2xl font-bold mb-4">My Clubs</h2>
@@ -195,7 +198,7 @@ const MyClubs = () => {
         </table>
       </div>
 
-  
+
 
       {/* club modal here */}
 

@@ -55,11 +55,9 @@ const CreateClubForm = () => {
 
   return (
     <div className="w-full max-w-3xl mx-auto shadow-xl rounded-xl p-6 lg:p-10 space-y-6
-      bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700
+      bg-white border border-gray-200
     ">
-      <h2 className="text-3xl lg:text-4xl font-bold text-center
-        text-gray-800 dark:text-gray-100 mb-6
-      ">
+      <h2 className="text-3xl lg:text-4xl font-bold text-center text-gray-800 mb-6">
         Create a New Club
       </h2>
 
@@ -67,19 +65,13 @@ const CreateClubForm = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Club Name */}
           <div>
-            <label className="label font-semibold text-gray-700 dark:text-gray-200">
+            <label className="label font-semibold text-gray-700">
               Club Name
             </label>
             <input
               type="text"
               placeholder="e.g. Mountain Hikers"
-              className="input input-bordered w-full
-                bg-gray-50 dark:bg-gray-800
-                text-gray-800 dark:text-gray-100
-                placeholder-gray-400 dark:placeholder-gray-300
-                border-gray-300 dark:border-gray-600
-                focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-              "
+              className="input input-bordered w-full bg-gray-50 text-gray-800 border-gray-300 focus:ring-2 focus:ring-blue-500"
               {...register("clubName", { required: "Club Name is required" })}
             />
             {errors.clubName && <p className="text-red-500 text-sm mt-1">{errors.clubName.message}</p>}
@@ -87,17 +79,11 @@ const CreateClubForm = () => {
 
           {/* Category */}
           <div>
-            <label className="label font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+            <label className="label font-semibold text-gray-700 flex items-center gap-2">
               <FiTag /> Category
             </label>
             <select
-              className="select select-bordered w-full
-                bg-gray-50 dark:bg-gray-800
-                text-gray-800 dark:text-gray-100
-                placeholder-gray-400 dark:placeholder-gray-300
-                border-gray-300 dark:border-gray-600
-                focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-              "
+              className="select select-bordered w-full bg-gray-50 text-gray-800 border-gray-300 focus:ring-2 focus:ring-blue-500"
               {...register("category", { required: "Category is required" })}
             >
               <option value="">Select Category</option>
@@ -114,19 +100,13 @@ const CreateClubForm = () => {
 
           {/* Location */}
           <div>
-            <label className="label font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+            <label className="label font-semibold text-gray-700 flex items-center gap-2">
               <FiMapPin /> Location
             </label>
             <input
               type="text"
               placeholder="e.g. Dhaka, Bangladesh"
-              className="input input-bordered w-full
-                bg-gray-50 dark:bg-gray-800
-                text-gray-800 dark:text-gray-100
-                placeholder-gray-400 dark:placeholder-gray-300
-                border-gray-300 dark:border-gray-600
-                focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-              "
+              className="input input-bordered w-full bg-gray-50 text-gray-800 border-gray-300 focus:ring-2 focus:ring-blue-500"
               {...register("location", { required: "Location is required" })}
             />
             {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>}
@@ -134,20 +114,14 @@ const CreateClubForm = () => {
 
           {/* Membership Fee */}
           <div>
-            <label className="label font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+            <label className="label font-semibold text-gray-700 flex items-center gap-2">
               <FiDollarSign /> Membership Fee
             </label>
             <input
               type="number"
               min={0}
               placeholder="0 = Free"
-              className="input input-bordered w-full
-                bg-gray-50 dark:bg-gray-800
-                text-gray-800 dark:text-gray-100
-                placeholder-gray-400 dark:placeholder-gray-300
-                border-gray-300 dark:border-gray-600
-                focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-              "
+              className="input input-bordered w-full bg-gray-50 text-gray-800 border-gray-300 focus:ring-2 focus:ring-blue-500"
               {...register("membershipFee", { required: "Membership fee is required" })}
             />
             {errors.membershipFee && <p className="text-red-500 text-sm mt-1">{errors.membershipFee.message}</p>}
@@ -156,17 +130,11 @@ const CreateClubForm = () => {
 
         {/* Description */}
         <div>
-          <label className="label font-semibold text-gray-700 dark:text-gray-200">Description</label>
+          <label className="label font-semibold text-gray-700">Description</label>
           <textarea
             rows="3"
             placeholder="Write a short description about your club..."
-            className="textarea textarea-bordered w-full
-              bg-gray-50 dark:bg-gray-800
-              text-gray-800 dark:text-gray-100
-              placeholder-gray-400 dark:placeholder-gray-300
-              border-gray-300 dark:border-gray-600
-              focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-            "
+            className="textarea textarea-bordered w-full bg-gray-50 text-gray-800 border-gray-300 focus:ring-2 focus:ring-blue-500"
             {...register("description", { required: "Description is required" })}
           ></textarea>
           {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
@@ -174,19 +142,13 @@ const CreateClubForm = () => {
 
         {/* Banner Image */}
         <div>
-          <label className="label font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
+          <label className="label font-semibold text-gray-700 flex items-center gap-2">
             <FiUpload /> Banner Image
           </label>
           <input
             type="file"
             accept="image/*"
-            className="file-input file-input-bordered w-full
-              bg-gray-50 dark:bg-gray-800
-              text-gray-800 dark:text-gray-100
-              placeholder-gray-400 dark:placeholder-gray-300
-              border-gray-300 dark:border-gray-600
-              focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-            "
+            className="file-input file-input-bordered w-full bg-gray-50 text-gray-800 border-gray-300 focus:ring-2 focus:ring-blue-500"
             {...register("bannerImage", { required: "Image is required" })}
           />
           {errors.bannerImage && <p className="text-red-500 text-sm mt-1">{errors.bannerImage.message}</p>}
@@ -195,11 +157,7 @@ const CreateClubForm = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="btn w-full py-3 text-lg font-semibold
-            bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600
-            focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-            transition-colors duration-200
-          "
+          className="btn w-full py-3 text-lg font-semibold bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200"
         >
           Create Club
         </button>

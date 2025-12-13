@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router";
 import { useForm } from "react-hook-form";
 import Loadingspinner from "../../../Components/Shared/Loadingspinner";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const EventManagement = () => {
   const axiosSecure = useAxiosSecure();
-  const [selectedEvent, setSelectedEvent] = React.useState(null);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
   const { register, handleSubmit, setValue, reset } = useForm();
 
+  // ================= FETCH EVENTS =================
   const {
     data: events = [],
     isLoading,
@@ -24,8 +26,8 @@ const EventManagement = () => {
     },
   });
 
-  // Autofill form when event selected
-  React.useEffect(() => {
+  // ================= AUTOFILL EDIT FORM =================
+  useEffect(() => {
     if (selectedEvent) {
       setValue("title", selectedEvent.title);
       setValue("location", selectedEvent.location);
@@ -36,45 +38,68 @@ const EventManagement = () => {
 
   if (isLoading) return <Loadingspinner />;
 
-  // PATCH update event
+  // ================= UPDATE EVENT =================
   const onSubmit = async (data) => {
-    const res = await axiosSecure.patch(`/events/${selectedEvent._id}`, data);
+    const res = await axiosSecure.patch(
+      `/events/${selectedEvent._id}`,
+      data
+    );
 
-    if (res.data.matchedCount) {
+    if (res.data.modifiedCount) {
       toast.success("Event updated successfully");
       refetch();
+      reset();
+      setSelectedEvent(null);
     }
-    reset();
-    setSelectedEvent(null);
   };
 
-  // Delete event
+  // ================= DELETE EVENT =================
   const handleDelete = async (id) => {
-    const res = await axiosSecure.delete(`/events/${id}`);
-    if (res.data.deletedCount) {
-      toast.success("Event deleted!");
-      refetch();
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      const res = await axiosSecure.delete(`/events/${id}`);
+      if (res.data.deletedCount) {
+        Swal.fire("Deleted!", "Event has been deleted.", "success");
+        refetch();
+      }
     }
   };
 
+  // ================= JSX =================
   return (
-    <div className="px-3 md:px-0">
-      <h2 className="text-2xl font-bold mb-4 text-base-content">Event Management</h2>
+    <div className="px-3 sm:px-4 md:px-6 lg:px-8">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+        <h2 className="text-xl sm:text-2xl font-bold">
+          Event Management
+        </h2>
 
-      <Link to="/deshboard/manager/create-event">
-        <button className="btn bg-orange-600 text-white my-4">Create Event</button>
-      </Link>
+        <Link to="/deshboard/manager/create-event">
+          <button className="btn bg-[#0092b8] text-white w-full sm:w-auto">
+            Create Event
+          </button>
+        </Link>
+      </div>
 
-      {/* Desktop Table */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="table table-zebra bg-base-100 text-base-content">
+      {/* ================= DESKTOP TABLE ================= */}
+      <div className="hidden lg:block overflow-x-auto">
+        <table className="table table-zebra bg-base-100">
           <thead>
-            <tr className="text-base-content font-semibold">
+            <tr>
               <th>#</th>
               <th>Title</th>
               <th>Location</th>
               <th>Description</th>
-              <th>Created At</th>
+              <th>Created</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -86,7 +111,9 @@ const EventManagement = () => {
                 <td>{e.title}</td>
                 <td>{e.location}</td>
                 <td className="max-w-xs truncate">{e.description}</td>
-                <td>{e.createdAt}</td>
+                <td>
+                  {new Date(e.createdAt).toLocaleDateString()}
+                </td>
                 <td className="flex gap-2">
                   <button
                     onClick={() => setSelectedEvent(e)}
@@ -94,7 +121,6 @@ const EventManagement = () => {
                   >
                     Edit
                   </button>
-
                   <button
                     onClick={() => handleDelete(e._id)}
                     className="btn btn-xs bg-orange-600 text-white"
@@ -108,40 +134,42 @@ const EventManagement = () => {
         </table>
       </div>
 
-      {/* Mobile Cards */}
-      <div className="md:hidden space-y-4">
+      {/* ================= MOBILE + TABLET CARDS ================= */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:hidden gap-4">
         {events.map((e, index) => (
           <div
             key={e._id}
-            className="p-4 shadow rounded-lg bg-base-100 border border-base-300 flex flex-col gap-2"
+            className="p-4 rounded-xl shadow-sm border bg-base-100 flex flex-col gap-2"
           >
-            <p className="font-bold text-lg text-base-content">
+            <p className="font-bold text-lg">
               {index + 1}. {e.title}
             </p>
 
-            <p className="text-sm text-base-content/90">
-              <span className="font-semibold">Location:</span> {e.location}
+            <p className="text-sm">
+              <span className="font-semibold">Location:</span>{" "}
+              {e.location}
             </p>
 
-            <p className="text-sm text-base-content/80 line-clamp-3">
-              <span className="font-semibold">Description:</span> {e.description}
+            <p className="text-sm line-clamp-3">
+              <span className="font-semibold">Description:</span>{" "}
+              {e.description}
             </p>
 
-            <p className="text-sm text-base-content/80">
-              <span className="font-semibold">Created:</span> {e.createdAt}
+            <p className="text-xs opacity-70">
+              Created:{" "}
+              {new Date(e.createdAt).toLocaleDateString()}
             </p>
 
-            <div className="flex gap-2 mt-2">
+            <div className="flex flex-col sm:flex-row gap-2 mt-2">
               <button
                 onClick={() => setSelectedEvent(e)}
-                className="btn btn-sm flex-1 bg-green-600 text-white"
+                className="btn btn-sm bg-green-600 text-white flex-1"
               >
                 Edit
               </button>
-
               <button
                 onClick={() => handleDelete(e._id)}
-                className="btn btn-sm flex-1 bg-orange-600 text-white"
+                className="btn btn-sm bg-orange-600 text-white flex-1"
               >
                 Delete
               </button>
@@ -150,34 +178,37 @@ const EventManagement = () => {
         ))}
       </div>
 
-      {/* Modal */}
+      {/* ================= EDIT MODAL ================= */}
       {selectedEvent && (
-        <dialog open className="modal">
-          <div className="modal-box w-11/12 max-w-lg bg-base-100 text-base-content">
+        <dialog open className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box w-full sm:max-w-lg">
             <h3 className="font-bold text-lg mb-4">Edit Event</h3>
 
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="space-y-3"
+            >
               <input
                 {...register("title")}
-                className="input input-bordered w-full bg-base-100"
+                className="input input-bordered w-full"
                 placeholder="Event Title"
               />
 
               <input
                 {...register("location")}
-                className="input input-bordered w-full bg-base-100"
+                className="input input-bordered w-full"
                 placeholder="Location"
               />
 
               <input
-                {...register("eventDate")}
                 type="date"
-                className="input input-bordered w-full bg-base-100"
+                {...register("eventDate")}
+                className="input input-bordered w-full"
               />
 
               <textarea
                 {...register("description")}
-                className="textarea textarea-bordered w-full bg-base-100"
+                className="textarea textarea-bordered w-full"
                 placeholder="Description"
               />
 
@@ -189,7 +220,6 @@ const EventManagement = () => {
                 >
                   Cancel
                 </button>
-
                 <button type="submit" className="btn btn-primary">
                   Update
                 </button>

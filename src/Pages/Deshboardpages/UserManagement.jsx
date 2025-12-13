@@ -74,7 +74,7 @@ const UserManagement = () => {
       </h3>
 
       {/* ---------- DESKTOP VIEW ---------- */}
-      <div className="hidden md:block overflow-x-auto rounded-xl border">
+      <div className="hidden md:block overflow-x-auto rounded-xl ">
         <table className="table table-zebra w-full">
           <thead className="bg-base-200 text-base-content">
             <tr>
