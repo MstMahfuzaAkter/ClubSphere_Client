@@ -6,7 +6,6 @@ import Login from "../Pages/Authpage/Login";
 import Registation from "../Pages/Authpage/Registation";
 import Loadingspinner from "../Components/Shared/Loadingspinner";
 import PrivateRoute from "./PrivateRoute";
-import DeshboardLayout from "../Layout/deshboardLayout";
 import CreateClubForm from "../Pages/deshboardpages/CreateClubForm";
 import Clubs from "../Pages/Navbarpages/Clubs";
 import ManageClub from "../Pages/deshboardpages/ManageClub";
@@ -26,7 +25,9 @@ import EventRegistation from "../Pages/Deshboardpages/Event/EventRegistration";
 import MemberClubs from "../Pages/Deshboardpages/Club/MemberClubs";
 import MembershipEvent from "../Pages/Deshboardpages/Event/MembershipEvent";
 import Deshboardmain from "../Pages/Deshboardpages/Deshboardmain";
-
+import Adminpaymenttable from "../Pages/Deshboardpages/Payment/Adminpaymenttable";
+import Memberpaymnets from "../Pages/Deshboardpages/Payment/Memberpaymnets";
+import DeshboardLayout from "../Layout/DeshboardLayout";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -80,8 +81,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: < Deshboardmain/>,
-        
+        element: < Deshboardmain />,
+
       },
       {
         path: "/deshboard/manager/create-club",
@@ -125,7 +126,15 @@ const router = createBrowserRouter([
       {
         path: '/deshboard/member/my-events',
         element: <MembershipEvent></MembershipEvent>
-      }
+      },
+      {
+        path: "/deshboard/admin/Transactions",
+        element: <Adminpaymenttable></Adminpaymenttable>,
+      },
+      {
+        path: "/deshboard/member/transaction",
+        element: <Memberpaymnets></Memberpaymnets>,
+      },
 
 
     ],

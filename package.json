@@ -10,17 +10,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-form": "^1.27.2",
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-query-devtools": "^5.91.1",
     "axios": "^1.13.2",
+    "dayjs": "^1.11.19",
     "dotenv": "^17.2.3",
     "firebase": "^12.6.0",
     "framer-motion": "^12.23.26",
     "leaflet": "^1.9.4",
-    "react": "^19.2.1",
-    "react-dom": "^19.2.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "react-hook-form": "^7.68.0",
     "react-icons": "^5.5.0",
     "react-leaflet": "^5.0.0",
@@ -30,8 +31,9 @@
     "react-spinners": "^0.17.0",
     "react-toastify": "^11.0.5",
     "recharts": "^3.5.1",
-    "sweetalert2": "^11.26.4",
-    "tailwindcss": "^4.1.17",
+    "stripe": "^18.5.0",
+    "sweetalert2": "^11.26.10",
+    "tailwindcss": "^4.1.18",
     "typewriter-effect": "^2.22.0"
   },
   "devDependencies": {

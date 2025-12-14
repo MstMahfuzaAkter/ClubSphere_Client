@@ -169,7 +169,7 @@ const EventManagement = () => {
               </button>
               <button
                 onClick={() => handleDelete(e._id)}
-                className="btn btn-sm bg-orange-600 text-white flex-1"
+                className="btn btn-sm bg-[#0092b8] text-white flex-1"
               >
                 Delete
               </button>

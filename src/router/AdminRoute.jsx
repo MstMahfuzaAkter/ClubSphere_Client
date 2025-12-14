@@ -14,11 +14,6 @@ const AdminRouter = ({children}) => {
     if(role !== 'admin'){
        return <div>Access is forbidden.........</div>
     }
-
-
-
-
-
     return children;
 };
 

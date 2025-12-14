@@ -124,7 +124,7 @@ const MyClubs = () => {
       <h2 className="text-2xl font-bold mb-4">My Clubs</h2>
       <Link to="/deshboard/manager/create-club">
         <div className="mt-4">
-          <button className="btn bg-orange-600 text-white font-bold">
+          <button className="btn bg-[#0092b8] text-white font-bold">
             Create New Club
           </button>
         </div>

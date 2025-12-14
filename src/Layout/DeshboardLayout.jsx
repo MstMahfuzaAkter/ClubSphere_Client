@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Link, Outlet } from "react-router";
 import { IoIosCreate } from "react-icons/io";
@@ -106,7 +107,7 @@ const DeshboardLayout = () => {
                         {/* <IoIosCreate className="w-6 h-6" /> */}
                         <MdMapsHomeWork className="w-6 h-6" />
                         <span className="is-drawer-close:hidden">
-                          Admin Overview
+                          Manager Overview
                         </span>
                       </button>
                     </Link>
@@ -267,7 +268,7 @@ const DeshboardLayout = () => {
                         {/* <IoIosCreate className="w-6 h-6" /> */}
                         <MdMapsHomeWork className="w-6 h-6" />
                         <span className="is-drawer-close:hidden">
-                          Admin Overview
+                         Member Overview
                         </span>
                       </button>
                     </Link>
