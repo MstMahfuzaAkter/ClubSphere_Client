@@ -56,7 +56,7 @@ const MemberClubs = () => {
                 <td>{club.createdAt ? addOneYear(club.createdAt) : "N/A"}</td>
                
                 <th>
-                    <button  onClick={() => Navigate(`/clubs/${club._id}`)} className="btn btn-md bg-orange-600 text-white">show detilas</button>
+                    <button  onClick={() => navigate(`/clubs/${club.clubId}`)} className="btn btn-md bg-orange-600 text-white">show detilas</button>
                 </th>
               
               </tr>
