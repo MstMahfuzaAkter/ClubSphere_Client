@@ -24,6 +24,8 @@ import EventMangement from "../Pages/Deshboardpages/Event/EventMangement";
 import EventDetails from "../Pages/Navbarpages/EventDetails";
 import SuccessPayment from "../Pages/Deshboardpages/Payment/SuccessPayment";
 import EventRegistation from "../Pages/Deshboardpages/Event/EventRegistration";
+import MemberClubs from "../Pages/Deshboardpages/Club/MemberClubs";
+import MembershipEvent from "../Pages/Deshboardpages/Event/MembershipEvent";
 
 const router = createBrowserRouter([
   {
@@ -114,6 +116,14 @@ const router = createBrowserRouter([
         path: '/deshboard/manager/event-registrations',
         element: <EventRegistation></EventRegistation>
 
+      },
+      {
+        path: '/deshboard/member/my-club',
+        element: <MemberClubs></MemberClubs>
+      },
+      {
+        path: '/deshboard/member/my-events',
+        element: <MembershipEvent></MembershipEvent>
       }
 
 

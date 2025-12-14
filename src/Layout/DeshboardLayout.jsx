@@ -3,10 +3,14 @@ import { Link, Outlet } from "react-router";
 import { IoIosCreate } from "react-icons/io";
 import useRole from "../router/useRole";
 import { FaUser } from "react-icons/fa";
-import { MdGroups2, MdManageHistory } from "react-icons/md";
+import { MdManageHistory } from "react-icons/md";
 import { MdCreateNewFolder } from "react-icons/md";
+import { BsCollectionFill } from "react-icons/bs";
+import { MdGroups2 } from "react-icons/md";
 import { FiCalendar } from "react-icons/fi";
 import { FaRegIdBadge } from "react-icons/fa6";
+import { MdMapsHomeWork } from "react-icons/md";
+import { MdAttachMoney } from "react-icons/md";
 
 const DeshboardLayout = () => {
   const { role } = useRole();
@@ -90,93 +94,124 @@ const DeshboardLayout = () => {
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                   data-tip="Settings"
                 ></button>
-
-                <Link to="/deshboard/manager/create-club">
-                  <button
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="create a club"
-                  >
-                    {/* create club icoon */}
-                    <IoIosCreate className="w-6 h-6" />
-                    <span className="is-drawer-close:hidden">
-                      Create A Club
-                    </span>
-                  </button>
-                </Link>
               </li>
+              {role === "manager" && (
+                <>
+                  <li>
+                    <Link to="/deshboard">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Admin Overview"
+                      >
+                        {/* <IoIosCreate className="w-6 h-6" /> */}
+                        <MdMapsHomeWork className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          Admin Overview
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
 
-              <li>
-                <Link to="/deshboard/manager/create-event">
-                  <button
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="My Clubs"
-                  >
+                  <li>
+                    <Link to="/deshboard/manager/create-club">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="create a club"
+                      >
+                        <IoIosCreate className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          create a club
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
 
+                  <li>
+                    <Link to="/deshboard/manager/create-event">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="create a event"
+                      >
+                        <MdCreateNewFolder className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          create a event
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
 
-                    <MdCreateNewFolder className="w-6 h-6" />
-                    <span className="is-drawer-close:hidden">
-                      My Clubs
-                    </span>
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/deshboard/manager/ClubMembersPanel">
-                  <button
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="ClubMembersPanel"
-                  >
-                    <MdGroups2 className="w-6 h-6" />
+                  <li>
+                    <Link to="/deshboard/manager/my-clubs">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="My Clubs"
+                      >
+                        <BsCollectionFill className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">My Clubs</span>
+                      </button>
+                    </Link>
+                  </li>
 
+                  <li>
+                    <Link to="/deshboard/manager/ClubMembersPanel">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Club Members"
+                      >
+                        <MdGroups2 className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          Club Members
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
 
-                    {/* <BsCollectionFill  /> */}
+                  <li>
+                    <Link to="/deshboard/manager/event-mangemnet">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Event Management"
+                      >
+                        <FiCalendar className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          event management
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
 
-                    <span className="is-drawer-close:hidden">
-                      ClubMembersPanel
-                    </span>
-                  </button>
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/deshboard/manager/event-mangemnet">
-                  <button
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="event managemnet"
-                  >
-                    {/* <MdGroups2 className="w-6 h-6"/> */}
-                    <FiCalendar className="w-6 h-6" />
-
-
-                    {/* <BsCollectionFill  /> */}
-
-                    <span className="is-drawer-close:hidden">
-                      Event Managemnet
-                    </span>
-                  </button>
-                </Link>
-              </li>
-              <li>
-                <Link to="/deshboard/manager/event-registrations">
-                  <button
-                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                    data-tip="event-registrations"
-                  >
-                    {/* <MdGroups2 className="w-6 h-6"/> */}
-                    {/* <FiCalendar className="w-6 h-6" /> */}
-                    <FaRegIdBadge className="w-6 h-6" />
-
-                    {/* <BsCollectionFill  /> */}
-
-                    <span className="is-drawer-close:hidden">
-                      Event-Registrations
-                    </span>
-                  </button>
-                </Link>
-              </li>
+                  <li>
+                    <Link to="/deshboard/manager/event-registrations">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Event Registrations"
+                      >
+                        <FaRegIdBadge className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          event registrations
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
+                </>
+              )}
 
               {role === "admin" && (
                 <>
+                  <li>
+                    <Link to="/deshboard">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Admin Overview"
+                      >
+                        {/* <IoIosCreate className="w-6 h-6" /> */}
+                        <MdMapsHomeWork className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          Admin Overview
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
                   <li>
                     <Link to="/deshboard/admin/manageuser">
                       <button
@@ -185,7 +220,7 @@ const DeshboardLayout = () => {
                       >
                         <FaUser className="w-6 h-6" />
                         <span className="is-drawer-close:hidden">
-                          Manage Users
+                          mange users
                         </span>
                       </button>
                     </Link>
@@ -199,9 +234,76 @@ const DeshboardLayout = () => {
                       >
                         <MdManageHistory className="w-6 h-6" />
                         <span className="is-drawer-close:hidden">
-                          Manage Clubs
+                          mange clubs
                         </span>
                       </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/deshboard/admin/Transactions">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Transactions"
+                      >
+                        {/* <MdManageHistory className="w-6 h-6" /> */}
+                        <MdAttachMoney className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          Transactions
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
+                </>
+              )}
+
+              {role === "member" && (
+                <>
+                  <li>
+                    <Link to="/deshboard">
+                      <button
+                        className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                        data-tip="Admin Overview"
+                      >
+                        {/* <IoIosCreate className="w-6 h-6" /> */}
+                        <MdMapsHomeWork className="w-6 h-6" />
+                        <span className="is-drawer-close:hidden">
+                          Admin Overview
+                        </span>
+                      </button>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/deshboard/member/my-club"
+                      className="btn btn-ghost justify-start is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="My Clubs"
+                    >
+                      <BsCollectionFill className="w-6 h-6" />
+                      <span className="is-drawer-close:hidden">My Clubs</span>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/deshboard/member/my-events"
+                      className="btn btn-ghost justify-start is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="My Events"
+                    >
+                      <FiCalendar className="w-6 h-6" />
+                      <span className="is-drawer-close:hidden">My Events</span>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/deshboard/member/transaction"
+                      className="btn btn-ghost justify-start is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="transaction history"
+                    >
+                      {/* <FiCalendar className="w-6 h-6" />
+                       */}
+                       <MdAttachMoney className="w-6 h-6"/>
+                      <span className="is-drawer-close:hidden">transaction history</span>
                     </Link>
                   </li>
                 </>
