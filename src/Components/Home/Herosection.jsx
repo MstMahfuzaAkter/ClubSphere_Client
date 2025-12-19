@@ -8,46 +8,65 @@ import img3 from "../../assets/img3.jfif";
 import { Link } from "react-router";
 
 const Herosection = () => {
+  const images = [img1, img2, img3];
+
   return (
-    <div className="mt-5">
+    <div className="mt-5 px-4 lg:px-0"> {/* Navbar fixed hole ektu margin dorkar */}
       <Carousel
         autoPlay={true}
         infiniteLoop={true}
-        interval={3000}
+        interval={4000}
         showThumbs={false}
         showStatus={false}
         stopOnHover={false}
+        className="overflow-hidden rounded-3xl shadow-2xl"
       >
-        {[img1, img2, img3].map((img, index) => (
-          <div key={index} className="relative">
-            <img className="w-full h-[60vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh] object-cover rounded-2xl" src={img} />
-            <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4 sm:px-6 md:px-10 lg:px-20">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg mb-3">
-                Welcome to {index === 0 ? "ClubSphere" : "HobbyHub"} <br />
-                <span className="text-indigo-400">
+        {images.map((img, index) => (
+          <div key={index} className="relative group">
+            {/* Image with Dark Overlay - eita lekha ke "WOW" korbe */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
+            
+            <img 
+              className="w-full h-[60vh] md:h-[80vh] object-cover" 
+              src={img} 
+              alt="Club Activity"
+            />
+
+            <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center px-6">
+              <h1 className="text-3xl md:text-6xl font-extrabold text-white mb-4 tracking-tight">
+                {index === 0 ? "Connect with" : "Discover your"} <br />
+                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
                   <Typewriter
-                    words={[
-                      "Explore Groups",
-                      "Join Communities",
-                      "Find Your Passion",
-                    ]}
+                    words={["ClubSphere", "Explore Groups", "Join Communities", "Find Your Passion"]}
                     loop={true}
                     cursor
-                    cursorStyle="|"
-                    typeSpeed={70}
+                    cursorStyle="_"
+                    typeSpeed={80}
                     deleteSpeed={50}
-                    delaySpeed={1000}
+                    delaySpeed={1500}
                   />
                 </span>
               </h1>
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl text-white drop-shadow-md max-w-3xl mb-4">
-                Hobbies are generally not done for profit, but for personal enjoyment and satisfaction.
+
+              <p className="text-gray-200 text-sm md:text-xl max-w-2xl mb-8 leading-relaxed drop-shadow-md">
+                Find people who share your passion. From photography to hiking, 
+                manage and join clubs easily with ClubSphere.
               </p>
-              <Link to="/Clubs">
-                <button className="btn bg-cyan-600 text-white rounded-2xl px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 text-sm sm:text-base md:text-lg">
-                  Explore Hobbies
-                </button>
-              </Link>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/Clubs">
+                  <button className="btn btn-lg bg-[#0092b8] hover:bg-indigo-700 border-none text-white rounded-full px-8 shadow-lg hover:scale-105 transition-all">
+                    Explore Clubs
+                  </button>
+                </Link>
+                
+                {/* Secondary CTA for "WOW" Factor */}
+                <Link to="/Events">
+                  <button className="btn btn-lg btn-outline text-white border-white/50 hover:bg-white/10 rounded-full px-8 backdrop-blur-sm">
+                    Join a Event
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         ))}

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router";
-import ThemeToggle from "../../theme/themetogol";
 import useAuth from "../../Hook/useAuth";
-import logo from "../../assets/logo.png";
+import logo from "../../assets/logo.jfif";
 
 const Navbar = () => {
   const { user, logoutuser } = useAuth();
@@ -10,110 +9,123 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink to="/">Home</NavLink>
+        <NavLink 
+          to="/" 
+          className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
+        >
+          Home
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/Clubs">Clubs</NavLink>
+        <NavLink 
+          to="/Clubs" 
+          className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
+        >
+          Clubs
+        </NavLink>
       </li>
       <li>
-        <NavLink to="/Events">Events</NavLink>
+        <NavLink 
+          to="/Events" 
+          className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
+        >
+          Events
+        </NavLink>
       </li>
     </>
   );
 
   return (
-    <div className="navbar bg-base-300 fixed shadow-sm -my-[15px]">
-      <div className="navbar max-w-10/12 mx-auto  ">
+    <div className="navbar bg-gradient-to-br from-[#e0f7ff] to-[#fff4e6] backdrop-blur-md fixed top-0 w-full z-[100] shadow-sm transition-all duration-300">
+      <div className="navbar max-w-7xl mx-auto w-full">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-5 w-5 text-[#007a99]"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {" "}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+                />
               </svg>
             </div>
             <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow-2xl border border-slate-100"
             >
               {links}
             </ul>
           </div>
-          <Link to="/">
-            <div>
-              <img src={logo} alt="Logo" className="w-10 h-10 rounded-full cursor-pointer" />
-            </div>
-          </Link>
-
-          <Link to='/'>
-            <h1 className="btn btn-ghost text-[15px] lg:text-xl bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">ClubSphere</h1>
-          </Link>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">{links}</ul>
-        </div>
-
-        <div className="navbar-end">
-            <ThemeToggle className="w-2 h-2" />
           
+          <Link to="/" className="flex items-center gap-2 group">
+            <img src={logo} alt="Logo" className="w-10 h-10 rounded-full cursor-pointer border-2 border-transparent group-hover:border-[#0092b8] transition-all" />
+            <h1 className="text-xl lg:text-2xl font-black bg-gradient-to-r from-[#0092b8] to-[#007a99] bg-clip-text text-transparent tracking-tight">
+              ClubSphere
+            </h1>
+          </Link>
+        </div>
 
+        <div className="navbar-center hidden lg:flex">
+          <ul className="menu menu-horizontal px-1 text-[16px] font-medium gap-2">
+            {links}
+          </ul>
+        </div>
+
+        <div className="navbar-end gap-3">
+        
           {user ? (
-            <div className="relative ">
-              <div className="flex items-center gap-5">
+            <div className="relative">
+              <button
+                className="avatar rounded-full border-2 border-[#0092b8]/20 hover:border-[#0092b8] transition-all overflow-hidden p-0.5"
+                onClick={() => setOpen(!open)}
+              >
+                <img
+                  className="w-9 h-9 rounded-full object-cover"
+                  src={user?.photoURL}
+                  alt="User Avatar"
+                />
+              </button>
 
-                {/* Avatar Button */}
-                <button
-                  className="avatar rounded-full border overflow-hidden"
-                  onClick={() => setOpen(!open)}
-                  title={user?.displayName}
-                >
-                  <img
-                    className="w-9 h-9 rounded-full object-cover"
-                    src={user?.photoURL}
-                    alt="User Avatar"
-                  />
-                </button>
-              </div>
-
-              {/* Dropdown */}
+              {/* Dropdown Menu */}
               {open && (
                 <div
-                  className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4 z-50
-                 text-gray-700 text-sm animate-fadeIn"
+                  className="absolute right-0 mt-3 w-56 bg-white shadow-2xl rounded-2xl p-4 z-[100] border border-slate-100 animate-in fade-in zoom-in duration-200"
+                  onMouseLeave={() => setOpen(false)}
                 >
-                  <p className="font-semibold">{user?.displayName}</p>
-                  <p className="text-gray-500 text-xs mt-1">{user?.email}</p>
+                  <div className="pb-3 border-b border-slate-100 mb-3">
+                    <p className="font-bold text-slate-800 truncate">{user?.displayName}</p>
+                    <p className="text-slate-500 text-xs truncate">{user?.email}</p>
+                  </div>
 
-                  {/* Mobile logout button (inside dropdown) */}
-
-                  <Link to="/deshboard">
-                    <button className="btn bg-[#0092b8] text-white rounded-xl w-full my-2">
+                  <Link to="/deshboard" onClick={() => setOpen(false)}>
+                    <button className="btn btn-sm h-10 bg-[#0092b8] hover:bg-[#007a99] border-none text-white rounded-xl w-full mb-2 shadow-md transition-all">
                       Dashboard
                     </button>
                   </Link>
                   <button
-                    onClick={() => logoutuser()}
-                    className="btn bg-[#0092b8] text-white rounded-xl w-full my-2 "
+                    onClick={() => {
+                      logoutuser();
+                      setOpen(false);
+                    }}
+                    className="btn btn-sm h-10 bg-slate-100 hover:bg-red-50 hover:text-red-600 border-none text-slate-600 rounded-xl w-full transition-all"
                   >
-                    LogOut
+                    Log Out
                   </button>
                 </div>
               )}
             </div>
           ) : (
-            <Link to="/login" className="btn bg-[#0092b8] text-white ml-2">
-              Login
+            <Link to="/login">
+              <button className="btn bg-[#0092b8] hover:bg-[#007a99] border-none text-white px-6 rounded-full shadow-lg transition-all hover:scale-105 active:scale-95">
+                Login
+              </button>
             </Link>
           )}
         </div>

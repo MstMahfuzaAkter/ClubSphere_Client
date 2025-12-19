@@ -10,7 +10,7 @@ const ClubManagerRouter = ({children}) => {
   if (loading || isLoading) {
     return <Loadingspinner></Loadingspinner>;
   }
-  if (role !== "admin") {
+   if (role !== "manager") {
     return <div>Access is forbidden.........</div>;
   }
 

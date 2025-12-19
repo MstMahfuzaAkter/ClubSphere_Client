@@ -4,6 +4,8 @@ import { Link, useLocation, useNavigate } from "react-router";
 import useGoogleLogin from "../../Hook/useGoogolelogin";
 import useAuth from "../../Hook/useAuth";
 import { toast } from "react-toastify";
+import { motion } from "framer-motion";
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight } from "react-icons/fi";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -21,149 +23,124 @@ const Login = () => {
   const handlelogin = (data) => {
     loginuser(data.email, data.password)
       .then(() => {
-        toast.success("Login successful!");
+        toast.success("Welcome back! Login successful ✨");
         navigate(location.state?.from || "/");
       })
       .catch(() => {
-        toast.error("Something went wrong. Please try again!");
+        toast.error("Invalid credentials. Please try again!");
       });
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gray-50">
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-        {/* Title */}
-        <h2 className="text-3xl font-bold text-center text-teal-600 mb-2">
-          Login to your account
-        </h2>
-
-        <p className="text-center text-sm text-gray-600 mb-6">
-          Don&apos;t have an account?
-          <Link
-            to="/register"
-            className="text-teal-600 font-medium hover:underline ml-1"
-          >
-            Register here
-          </Link>
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-[#f8fbff] to-[#eef6ff] flex items-center justify-center p-6 ">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-md bg-white p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-slate-100"
+      >
+        {/* Header */}
+        <div className="text-center mb-10">
+          <h2 className="text-4xl font-black text-slate-800 mb-2">
+            Welcome <span className="text-[#0092b8]">Back</span>
+          </h2>
+          <p className="text-slate-500 font-medium">
+            New here?
+            <Link
+              to="/register"
+              className="text-[#0092b8] hover:underline ml-2 font-bold"
+            >
+              Create Account
+            </Link>
+          </p>
+        </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit(handlelogin)} className="space-y-5">
+        <form onSubmit={handleSubmit(handlelogin)} className="space-y-6">
           {/* Email */}
-          <div>
-            <label className="text-sm font-medium text-gray-700">
-              Email address
+          <div className="space-y-2">
+            <label className="text-xs font-bold uppercase text-slate-500 ml-1">
+              Email Address
             </label>
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full mt-1 px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-400 focus:outline-none focus:ring-offset-1"
-              {...register("email", { required: true })}
-            />
+            <div className="relative group">
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0092b8]" />
+              <input
+                type="email"
+                placeholder="name@example.com"
+                className="w-full bg-slate-50 border-2 border-slate-200 text-slate-800 pl-12 pr-4 py-4 rounded-2xl focus:border-[#0092b8] outline-none transition-all font-medium"
+                {...register("email", { required: true })}
+              />
+            </div>
             {errors.email && (
-              <p className="text-red-500 text-xs mt-1">Email is required</p>
+              <p className="text-rose-500 text-xs font-semibold ml-1">
+                Email is required
+              </p>
             )}
           </div>
 
           {/* Password */}
-          <div>
-            <div className="flex justify-between text-sm">
-              <label className="font-medium text-gray-700">Password</label>
+          <div className="space-y-2">
+            <div className="flex justify-between items-center ml-1">
+              <label className="text-xs font-bold uppercase text-slate-500">
+                Password
+              </label>
               <Link
                 to="/forgot-password"
-                className="text-teal-600 hover:underline"
+                className="text-xs font-bold text-[#0092b8] hover:underline"
               >
-                Forgot password?
+                Forgot?
               </Link>
             </div>
-
-            <div className="relative mt-1">
+            <div className="relative group">
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0092b8]" />
               <input
                 type={showPassword ? "text" : "password"}
-                placeholder="Enter password"
-                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-400 focus:outline-none focus:ring-offset-1"
+                placeholder="••••••••"
+                className="w-full bg-slate-50 border-2 border-slate-200 text-slate-800 pl-12 pr-12 py-4 rounded-2xl focus:border-[#0092b8] outline-none transition-all font-medium"
                 {...register("password", { required: true })}
               />
-              {errors.password && (
-                <p className="text-red-500 text-xs mt-1">
-                  Password is required
-                </p>
-              )}
-
-              {/* Eye Toggle */}
               <button
                 type="button"
-                aria-label={showPassword ? "Hide password" : "Show password"}
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
               >
-                {showPassword ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M3 3l18 18M10.5 10.5a3 3 0 004.242 4.242"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="w-5 h-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.64 0 8.577 3.01 9.964 7.183.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.64 0-8.577-3.01-9.964-7.183z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                )}
+                {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
               </button>
             </div>
+            {errors.password && (
+              <p className="text-rose-500 text-xs font-semibold ml-1">
+                Password is required
+              </p>
+            )}
           </div>
 
           {/* Login Button */}
-          <button className="w-full bg-[#0092b8] text-white hover:bg-teal-600 py-3 rounded-lg font-semibold transition">
-            Login
+          <button className="w-full bg-[#0092b8] hover:bg-[#007a99] text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 active:scale-[0.98]">
+            Sign In <FiArrowRight />
           </button>
         </form>
 
         {/* Divider */}
-        <div className="flex items-center my-6">
-          <div className="flex-grow border-t border-gray-300"></div>
-          <span className="px-3 text-gray-500 text-sm">OR</span>
-          <div className="flex-grow border-t border-gray-300"></div>
+        <div className="flex items-center my-8">
+          <div className="flex-grow border-t border-slate-200"></div>
+          <span className="px-4 text-slate-400 text-xs font-bold uppercase">
+            Or continue with
+          </span>
+          <div className="flex-grow border-t border-slate-200"></div>
         </div>
 
         {/* Google Login */}
         <button
           onClick={handlegooglelogin}
-          className="w-full border border-gray-300 text-gray-700 py-3 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-100 transition"
+          className="w-full border-2 border-slate-200 text-slate-700 py-4 rounded-2xl flex justify-center items-center gap-3 hover:bg-slate-100 transition-all font-bold text-xs uppercase tracking-widest active:scale-[0.98]"
         >
           <img
             src="https://www.svgrepo.com/show/355037/google.svg"
-            className="w-5"
+            className="w-5 h-5"
             alt="Google"
           />
-          Login with Google
+          Google Account
         </button>
-      </div>
+      </motion.div>
     </div>
   );
 };

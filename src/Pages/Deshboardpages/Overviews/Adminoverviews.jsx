@@ -2,32 +2,30 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { getAuth } from "firebase/auth";
-import { MdCardMembership } from "react-icons/md";
-import { FcCheckmark } from "react-icons/fc";
-import { MdPendingActions } from "react-icons/md";
-import { FcCancel } from "react-icons/fc";
-import {
-  FaUsers,
-  FaBuilding,
-  FaCalendarAlt,
-  FaDollarSign,
-} from "react-icons/fa";
+import { motion } from "framer-motion";
+import { MdCardMembership, MdPendingActions, MdOutlineAnalytics } from "react-icons/md";
+import { FcCheckmark, FcCancel } from "react-icons/fc";
+import { FaUsers, FaBuilding, FaCalendarAlt, FaDollarSign } from "react-icons/fa";
 import Loadingspinner from "../../../Components/Shared/Loadingspinner";
 import AdminChart from "./AdminChart";
 
-/* ---------- Small Reusable Card ---------- */
-const StatCard = ({ title, value, icon: Icon, iconColor }) => (
-  <div className="bg-white rounded-2xl p-5 shadow-sm flex items-center justify-between">
+/* ---------- Optimized Stat Card ---------- */
+const StatCard = ({ title, value, icon: Icon, iconColor, delay }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ delay }}
+    whileHover={{ y: -5 }}
+    className="bg-white rounded-[2rem] p-6 shadow-sm border border-slate-50 flex items-center gap-5 transition-all"
+  >
+    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center bg-slate-50 ${iconColor} shadow-inner`}>
+      <Icon size={24} />
+    </div>
     <div>
-      <p className="text-sm text-gray-500">{title}</p>
-      <h3 className="text-2xl font-bold text-gray-800 mt-1">{value}</h3>
+      <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">{title}</p>
+      <h3 className="text-2xl font-black text-slate-800 mt-1 tracking-tight">{value}</h3>
     </div>
-    <div
-      className={`w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center ${iconColor}`}
-    >
-      <Icon size={22} />
-    </div>
-  </div>
+  </motion.div>
 );
 
 const Adminoverviews = () => {
@@ -36,122 +34,92 @@ const Adminoverviews = () => {
     queryFn: async () => {
       const auth = getAuth();
       const user = auth.currentUser;
+      if (!user) throw new Error("User not logged in");
 
-      if (!user) {
-        throw new Error("User not logged in");
-      }
-
-      // ✅ Firebase ID Token
       const token = await user.getIdToken(true);
-
       const res = await axios.get(
         `${import.meta.env.VITE_API_URL}/admin/summary`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
       return res.data;
     },
   });
 
-  if (isLoading) {
-    return <Loadingspinner></Loadingspinner>;
-  }
-
-  if (isError) {
-    return (
-      <p className="p-6 text-red-500">
-        Failed to load summary: {error.message}
-      </p>
-    );
-  }
-
-  console.log(data);
+  if (isLoading) return <Loadingspinner />;
+  if (isError) return <div className="p-10 text-red-500 ">Error: {error.message}</div>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-purple-50 p-6 rounded-2xl">
-      {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Admin Overview</h1>
-        <p className="text-sm text-gray-500">
-          System-wide statistics and recent activity
-        </p>
+    <div className="">
+      {/* Header Section */}
+      <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-black text-slate-800 tracking-tight">System Overview</h1>
+          <p className="text-slate-400 font-medium mt-1">Real-time platform metrics and analytics</p>
+        </div>
+        <div className="flex items-center gap-2 bg-[#007a99]/10 text-[#007a99] px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest">
+          <div className="w-2 h-2 bg-[#007a99] rounded-full animate-pulse" /> Live System Data
+        </div>
       </div>
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <StatCard
-          title="Total Users"
-          value={data?.users || 0}
-          icon={FaUsers}
-          iconColor="text-[#0092b8]"
-        />
-        <StatCard
-          title="Total Clubs"
-          value={data?.clubs?.total || 0}
-          icon={FaBuilding}
-          iconColor="text-purple-600"
-        />
-        <StatCard
-          title="Total Events"
-          value={data?.events || 0}
-          icon={FaCalendarAlt}
-          iconColor="text-indigo-600"
-        />
-        <StatCard
-          title="Total Revenue"
-          value={`$${data?.revenue || 0}`}
-          icon={FaDollarSign}
-          iconColor="text-orange-600"
-        />
-        <StatCard
-          title="Total Membership"
-          value={`$${data?.memberships || 0}`}
-          icon={MdCardMembership}
-          iconColor="text-orange-600"
-        />
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mb-8">
+        <StatCard title="Total Users" value={data?.users || 0} icon={FaUsers} iconColor="text-blue-500" delay={0.1} />
+        <StatCard title="Total Clubs" value={data?.clubs?.total || 0} icon={FaBuilding} iconColor="text-purple-500" delay={0.2} />
+        <StatCard title="Total Events" value={data?.events || 0} icon={FaCalendarAlt} iconColor="text-indigo-500" delay={0.3} />
+        <StatCard title="Revenue" value={`$${data?.revenue || 0}`} icon={FaDollarSign} iconColor="text-emerald-500" delay={0.4} />
+        <StatCard title="Memberships" value={data?.memberships || 0} icon={MdCardMembership} iconColor="text-orange-500" delay={0.5} />
       </div>
 
-      {/* Club Status Breakdown */}
-      <div className="mt-6 bg-white p-4 rounded-2xl shadow-sm text-sm flex flex-wrap justify-start gap-4 sm:gap-6">
-        <span className="flex flex-1 min-w-[200px] justify-center items-center text-xl sm:text-2xl gap-2">
-          <FcCheckmark size={34} /> Approved Clubs: {data?.clubs?.approved || 0}
-        </span>
-        <span className="flex flex-1 min-w-[200px] justify-center items-center text-xl sm:text-2xl gap-2">
-          <MdPendingActions size={34} /> Pending Clubs:{" "}
-          {data?.clubs?.pending || 0}
-        </span>
-        <span className="flex flex-1 min-w-[200px] justify-center items-center text-xl sm:text-2xl gap-2">
-          <FcCancel size={34} /> Rejected Clubs: {data?.clubs?.rejected || 0}
-        </span>
-      </div>
-
-      {/* Analytics & Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
-        {/* Chart Section */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm lg:col-span-2 flex flex-col">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">
-            Membership Growth
-          </h2>
-          <div className="flex-1 h-64 sm:h-80 md:h-96">
-            <AdminChart />
-          </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        {/* Main Chart Card */}
+        <div className="lg:col-span-2">
+          <AdminChart />
         </div>
 
-        {/* Recent Activity */}
-       {/*  <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">
-            Recent Activity
-          </h2>
-          <ul className="space-y-3 text-sm text-gray-600">
-            <li>✔ New club approved</li>
-            <li>💳 Payment received</li>
-            <li>👤 New user registered</li>
-          </ul>
-        </div> */}
+        {/* Club Status breakdown Side Card */}
+        <div className="space-y-6">
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="bg-slate-900 rounded-[2.5rem] p-8 text-white shadow-xl shadow-slate-200"
+          >
+            <div className="flex items-center gap-3 mb-8">
+                <div className="p-2 bg-white/10 rounded-lg"><MdOutlineAnalytics size={20} /></div>
+                <h3 className="font-black tracking-tight text-lg">Club Health</h3>
+            </div>
+            
+            <div className="space-y-6">
+              <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                <div className="flex items-center gap-3 font-bold text-sm">
+                  <FcCheckmark size={24} /> Approved
+                </div>
+                <span className="text-xl font-black">{data?.clubs?.approved || 0}</span>
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                <div className="flex items-center gap-3 font-bold text-sm">
+                  <MdPendingActions size={24} className="text-amber-400" /> Pending
+                </div>
+                <span className="text-xl font-black">{data?.clubs?.pending || 0}</span>
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-white/5 rounded-2xl border border-white/5">
+                <div className="flex items-center gap-3 font-bold text-sm">
+                  <FcCancel size={24} /> Rejected
+                </div>
+                <span className="text-xl font-black">{data?.clubs?.rejected || 0}</span>
+              </div>
+            </div>
+          </motion.div>
+          
+          {/* Info Tip */}
+          <div className="p-6 bg-blue-50 rounded-[2rem] border border-blue-100">
+            <p className="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Quick Tip</p>
+            <p className="text-sm text-blue-800/70 font-medium leading-relaxed">
+              Check the pending clubs section to approve new organizations waiting for validation.
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );

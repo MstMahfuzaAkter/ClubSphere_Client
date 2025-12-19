@@ -63,7 +63,7 @@ const ClubMembership = () => {
         </div>
 
         {!membership?._id && <JoinButton club={club} refetch={refetch} />}
-        {membership?.status === "pendingPayment" && <PendingPayment club={club}/>}
+        {membership?.status === "pendingPayment" && <PendingPayment club={club} />}
         {membership?.status === "active" && <ActiveMembership />}
       </div>
     </div>
