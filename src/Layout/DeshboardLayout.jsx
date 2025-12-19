@@ -61,7 +61,9 @@ const DashboardLayout = () => {
           </div>
           <div className="flex-1">
             <h1 className="text-xl font-black tracking-tight text-slate-800 ml-2 lg:hidden">
-              Club<span className="text-[#007a99]">Sphere</span>
+              <Link to="/">
+                Club<span className="text-[#007a99]">Sphere</span>
+              </Link>
             </h1>
             <div className="hidden lg:block">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-[0.2em]">Dashboard / {role}</span>
