@@ -9,7 +9,7 @@ const MemberEvents = () => {
 
   // Fetch all upcoming events
   const { data: events = [], refetch } = useQuery(["events"], async () => {
-    const res = await axios.get("/events"); // backend থেকে fetch
+    const res = await axios.get("/events"); 
     return res.data;
   });
 
