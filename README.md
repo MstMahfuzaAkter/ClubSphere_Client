@@ -16,10 +16,6 @@ Offer role-based control for Admins, Managers, and Members
 🔗 Live URL:
 👉 https://clubsphere-a54db.web.app
 
-👤 Admin Access (For Testing)
-Admin Email:admin@clubsphere.com
-Admin Password:Admin@123
-
 🚀 Key Features
 🔐 Authentication & Security
 Firebase Authentication (Email/Password & Google)
