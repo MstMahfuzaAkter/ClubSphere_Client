@@ -41,7 +41,7 @@ export default function ClubSphereHowItWorks({ className = "" }) {
             id="how-it-works-title"
             className="text-3xl md:text-4xl font-bold tracking-tight text-[#007a99]"
           >
-            How ClubSphere Works
+            How ClubConnet Works
           </h2>
           <p className="text-slate-700 text-base max-w-xl leading-relaxed font-medium">
             A streamlined ecosystem designed to take your club from simple hobby groups to thriving digital communities.

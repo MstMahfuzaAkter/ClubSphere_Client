@@ -34,7 +34,7 @@ const WhyJoin = () => {
           <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
             Why Join a{" "}
             <span className="text-[#007a99] relative">
-              ClubSphere Club?
+              ClubConnet Club?
               <svg className="absolute -bottom-2 left-0 w-full h-2 text-[#0092b8]/30" viewBox="0 0 100 10" preserveAspectRatio="none">
                 <path d="M0 5 Q 25 0 50 5 T 100 5" stroke="currentColor" strokeWidth="2" fill="transparent" />
               </svg>

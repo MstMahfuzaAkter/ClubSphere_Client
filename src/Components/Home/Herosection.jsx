@@ -50,7 +50,7 @@ const Herosection = () => {
 
               <p className="text-gray-200 text-sm md:text-xl max-w-2xl mb-8 leading-relaxed drop-shadow-md">
                 Find people who share your passion. From photography to hiking, 
-                manage and join clubs easily with ClubSphere.
+                manage and join clubs easily with Clubconnet.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">

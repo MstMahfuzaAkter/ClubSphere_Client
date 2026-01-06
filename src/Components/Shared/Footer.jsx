@@ -18,7 +18,7 @@ const Footer = () => {
                 className="w-12 h-12 rounded-full shadow-md border-2 border-[#0092b8]"
               />
               <h2 className="text-3xl font-black bg-gradient-to-r from-[#0092b8] to-[#007a99] bg-clip-text text-transparent">
-                ClubSphere
+                ClubConnet
               </h2>
             </div>
             <p className="text-slate-600 text-sm font-semibold tracking-wide">
@@ -77,7 +77,7 @@ const Footer = () => {
           </nav>
 
           <aside className="text-slate-500 text-sm font-bold">
-            © {new Date().getFullYear()} <span className="text-[#007a99]">ClubSphere</span> — All Rights Reserved.
+            © {new Date().getFullYear()} <span className="text-[#007a99]">ClubConnet</span> — All Rights Reserved.
           </aside>
         </div>
       </div>

@@ -67,7 +67,7 @@ const Navbar = () => {
           <Link to="/" className="flex items-center gap-2 group">
             <img src={logo} alt="Logo" className="w-10 h-10 rounded-full cursor-pointer border-2 border-transparent group-hover:border-[#0092b8] transition-all" />
             <h1 className="text-xl lg:text-2xl font-black bg-gradient-to-r from-[#0092b8] to-[#007a99] bg-clip-text text-transparent tracking-tight">
-              ClubSphere
+              ClubConnet
             </h1>
           </Link>
         </div>
