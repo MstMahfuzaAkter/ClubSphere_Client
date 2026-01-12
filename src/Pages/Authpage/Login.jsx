@@ -5,10 +5,12 @@ import useGoogleLogin from "../../Hook/useGoogolelogin";
 import useAuth from "../../Hook/useAuth";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
-import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiZap } from "react-icons/fi";
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight, FiZap, FiLoader } from "react-icons/fi";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  
   const handlegooglelogin = useGoogleLogin();
   const { loginuser } = useAuth();
   const location = useLocation();
@@ -21,21 +23,33 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  // 🔹 Demo Login Function (Auto-fill)
-  const handleDemoLogin = () => {
-    setValue("email", "admin@clubsphere.com");
-    setValue("password", "Admin@123");
-    toast.info("Demo credentials applied! 🔐");
+  // 🔹 Enhanced Demo Login Function
+  const handleDemoLogin = (role) => {
+    const credentials = {
+      admin: { email: "admin@clubsphere.com", pass: "Admin@123" },
+      member: { email: "saru@gmail.com", pass: "123asdA!" },
+      manager: { email: "oni@gmail.com", pass: "123asdA!" },
+    };
+
+    const selected = credentials[role];
+    setValue("email", selected.email);
+    setValue("password", selected.pass);
+    toast.info(`${role.charAt(0).toUpperCase() + role.slice(1)} credentials applied! 🔐`);
   };
 
   const handlelogin = (data) => {
+    setLoading(true);
     loginuser(data.email, data.password)
       .then(() => {
         toast.success("Welcome back! Login successful ✨");
         navigate(location.state?.from || "/");
       })
-      .catch(() => {
+      .catch((err) => {
+        console.error(err);
         toast.error("Invalid credentials. Please try again!");
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -58,16 +72,30 @@ const Login = () => {
           </p>
         </div>
 
-        {/* 🔹 Demo Login Button */}
-        <button 
-          onClick={handleDemoLogin}
-          type="button"
-          className="w-full mb-6 bg-amber-50 border-2 border-dashed border-amber-200 text-amber-700 py-3 rounded-2xl font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-amber-100 transition-all flex items-center justify-center gap-2"
-        >
-          <FiZap className="text-amber-500" /> Click for Demo Access
-        </button>
+        {/* 🔹 Demo Login Selector */}
+        <div className="mb-8 p-4 bg-amber-50 border-2 border-dashed border-amber-200 rounded-2xl">
+          <div className="flex items-center justify-center gap-2 mb-3">
+            <FiZap className="text-amber-500" />
+            <p className="text-[10px] font-black uppercase tracking-widest text-amber-600">
+              Quick Demo Access
+            </p>
+          </div>
+          <div className="grid grid-cols-3 gap-2">
+            {['admin', 'member', 'manager'].map((role) => (
+              <button
+                key={role}
+                type="button"
+                onClick={() => handleDemoLogin(role)}
+                className="py-2 px-1 bg-white border border-amber-200 rounded-xl text-[9px] font-bold uppercase text-amber-700 hover:bg-[#0092b8] hover:text-white hover:border-[#0092b8] transition-all shadow-sm active:scale-95"
+              >
+                {role}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <form onSubmit={handleSubmit(handlelogin)} className="space-y-6">
+          {/* Email Field */}
           <div className="space-y-2">
             <label className="text-xs font-bold uppercase text-slate-500 ml-1">Email Address</label>
             <div className="relative group">
@@ -82,6 +110,7 @@ const Login = () => {
             {errors.email && <p className="text-rose-500 text-xs font-semibold ml-1">{errors.email.message}</p>}
           </div>
 
+          {/* Password Field */}
           <div className="space-y-2">
             <div className="flex justify-between items-center ml-1">
               <label className="text-xs font-bold uppercase text-slate-500">Password</label>
@@ -106,8 +135,13 @@ const Login = () => {
             {errors.password && <p className="text-rose-500 text-xs font-semibold ml-1">{errors.password.message}</p>}
           </div>
 
-          <button type="submit" className="w-full bg-[#0092b8] hover:bg-[#007a99] text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 active:scale-[0.98]">
-            Sign In <FiArrowRight />
+          {/* Submit Button */}
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-[#0092b8] hover:bg-[#007a99] disabled:bg-slate-400 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 active:scale-[0.98]"
+          >
+            {loading ? <FiLoader className="animate-spin text-lg" /> : <>Sign In <FiArrowRight /></>}
           </button>
         </form>
 
