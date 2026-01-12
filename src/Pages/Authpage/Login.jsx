@@ -23,7 +23,6 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  // 🔹 Enhanced Demo Login Function
   const handleDemoLogin = (role) => {
     const credentials = {
       admin: { email: "admin@clubsphere.com", pass: "Admin@123" },
@@ -32,9 +31,12 @@ const Login = () => {
     };
 
     const selected = credentials[role];
-    setValue("email", selected.email);
-    setValue("password", selected.pass);
-    toast.info(`${role.charAt(0).toUpperCase() + role.slice(1)} credentials applied! 🔐`);
+    setValue("email", selected.email, { shouldValidate: true });
+    setValue("password", selected.pass, { shouldValidate: true });
+    toast.info(`${role.charAt(0).toUpperCase() + role.slice(1)} credentials applied! 🔐`, {
+      position: "top-center",
+      autoClose: 2000
+    });
   };
 
   const handlelogin = (data) => {
@@ -54,28 +56,31 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f8fbff] to-[#eef6ff] flex items-center justify-center p-6 ">
+    // Outer container: Flex center to keep card in the middle of the viewport
+    <div className="min-h-[100dvh] bg-gradient-to-br from-[#f8fbff] to-[#eef6ff] flex items-center justify-center p-4 sm:p-6 md:p-8">
       <motion.div
-        initial={{ opacity: 0, y: 40 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md bg-white p-10 rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-slate-100"
+        transition={{ duration: 0.5 }}
+        className="w-full max-w-[440px] bg-white p-6 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-slate-100"
       >
-        <div className="text-center mb-8">
-          <h2 className="text-4xl font-black text-slate-800 mb-2">
+        {/* Header */}
+        <div className="text-center mb-6 sm:mb-8">
+          <h2 className="text-3xl sm:text-4xl font-black text-slate-800 mb-2">
             Welcome <span className="text-[#0092b8]">Back</span>
           </h2>
-          <p className="text-slate-500 font-medium">
+          <p className="text-sm sm:text-base text-slate-500 font-medium">
             New here?
-            <Link to="/register" className="text-[#0092b8] hover:underline ml-2 font-bold">
+            <Link to="/register" className="text-[#0092b8] hover:text-[#007a99] transition-colors ml-2 font-bold">
               Create Account
             </Link>
           </p>
         </div>
 
-        {/* 🔹 Demo Login Selector */}
-        <div className="mb-8 p-4 bg-amber-50 border-2 border-dashed border-amber-200 rounded-2xl">
+        {/* 🔹 Demo Login Selector - Responsive Grid */}
+        <div className="mb-6 sm:mb-8 p-4 bg-amber-50/50 border-2 border-dashed border-amber-200 rounded-2xl">
           <div className="flex items-center justify-center gap-2 mb-3">
-            <FiZap className="text-amber-500" />
+            <FiZap className="text-amber-500 shrink-0" />
             <p className="text-[10px] font-black uppercase tracking-widest text-amber-600">
               Quick Demo Access
             </p>
@@ -86,7 +91,7 @@ const Login = () => {
                 key={role}
                 type="button"
                 onClick={() => handleDemoLogin(role)}
-                className="py-2 px-1 bg-white border border-amber-200 rounded-xl text-[9px] font-bold uppercase text-amber-700 hover:bg-[#0092b8] hover:text-white hover:border-[#0092b8] transition-all shadow-sm active:scale-95"
+                className="py-2.5 px-1 bg-white border border-amber-200 rounded-xl text-[10px] font-bold uppercase text-amber-700 hover:bg-[#0092b8] hover:text-white hover:border-[#0092b8] transition-all shadow-sm active:scale-95"
               >
                 {role}
               </button>
@@ -94,66 +99,69 @@ const Login = () => {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit(handlelogin)} className="space-y-6">
+        <form onSubmit={handleSubmit(handlelogin)} className="space-y-4 sm:space-y-5">
           {/* Email Field */}
-          <div className="space-y-2">
-            <label className="text-xs font-bold uppercase text-slate-500 ml-1">Email Address</label>
+          <div className="space-y-1.5">
+            <label className="text-[11px] font-bold uppercase text-slate-400 ml-1">Email Address</label>
             <div className="relative group">
-              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0092b8]" />
+              <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0092b8] transition-colors" />
               <input
                 type="email"
                 placeholder="name@example.com"
-                className="w-full bg-slate-50 border-2 border-slate-200 text-slate-800 pl-12 pr-4 py-4 rounded-2xl focus:border-[#0092b8] outline-none transition-all font-medium"
+                className="w-full bg-slate-50 border-2 border-slate-100 text-slate-800 pl-11 pr-4 py-3.5 sm:py-4 rounded-2xl focus:bg-white focus:border-[#0092b8] outline-none transition-all font-medium text-sm sm:text-base"
                 {...register("email", { required: "Email is required" })}
               />
             </div>
-            {errors.email && <p className="text-rose-500 text-xs font-semibold ml-1">{errors.email.message}</p>}
+            {errors.email && <p className="text-rose-500 text-[11px] font-bold ml-1">{errors.email.message}</p>}
           </div>
 
           {/* Password Field */}
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             <div className="flex justify-between items-center ml-1">
-              <label className="text-xs font-bold uppercase text-slate-500">Password</label>
-              <Link to="/forgot-password" size={18} className="text-xs font-bold text-[#0092b8] hover:underline">Forgot?</Link>
+              <label className="text-[11px] font-bold uppercase text-slate-400">Password</label>
+              <Link to="/forgot-password" size={18} className="text-[11px] font-bold text-[#0092b8] hover:underline">Forgot?</Link>
             </div>
             <div className="relative group">
-              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0092b8]" />
+              <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0092b8] transition-colors" />
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                className="w-full bg-slate-50 border-2 border-slate-200 text-slate-800 pl-12 pr-12 py-4 rounded-2xl focus:border-[#0092b8] outline-none transition-all font-medium"
+                className="w-full bg-slate-50 border-2 border-slate-100 text-slate-800 pl-11 pr-12 py-3.5 sm:py-4 rounded-2xl focus:bg-white focus:border-[#0092b8] outline-none transition-all font-medium text-sm sm:text-base"
                 {...register("password", { required: "Password is required" })}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
+                aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? <FiEyeOff size={18} /> : <FiEye size={18} />}
               </button>
             </div>
-            {errors.password && <p className="text-rose-500 text-xs font-semibold ml-1">{errors.password.message}</p>}
+            {errors.password && <p className="text-rose-500 text-[11px] font-bold ml-1">{errors.password.message}</p>}
           </div>
 
           {/* Submit Button */}
           <button 
             type="submit" 
             disabled={loading}
-            className="w-full bg-[#0092b8] hover:bg-[#007a99] disabled:bg-slate-400 text-white py-4 rounded-2xl font-black uppercase text-xs tracking-widest transition-all shadow-lg shadow-cyan-500/20 flex items-center justify-center gap-2 active:scale-[0.98]"
+            className="w-full bg-[#0092b8] hover:bg-[#007a99] disabled:bg-slate-300 text-white py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest transition-all shadow-lg shadow-cyan-500/25 flex items-center justify-center gap-2 active:scale-[0.98] mt-2"
           >
-            {loading ? <FiLoader className="animate-spin text-lg" /> : <>Sign In <FiArrowRight /></>}
+            {loading ? <FiLoader className="animate-spin text-lg" /> : <>Sign In <FiArrowRight className="text-lg" /></>}
           </button>
         </form>
 
-        <div className="flex items-center my-8">
-          <div className="flex-grow border-t border-slate-200"></div>
-          <span className="px-4 text-slate-400 text-xs font-bold uppercase">Or continue with</span>
-          <div className="flex-grow border-t border-slate-200"></div>
+        {/* Divider */}
+        <div className="flex items-center my-6 sm:my-8">
+          <div className="flex-grow border-t border-slate-100"></div>
+          <span className="px-4 text-slate-400 text-[10px] font-black uppercase tracking-tighter">Or continue with</span>
+          <div className="flex-grow border-t border-slate-100"></div>
         </div>
 
+        {/* Social Login */}
         <button
           onClick={handlegooglelogin}
-          className="w-full border-2 border-slate-200 text-slate-700 py-4 rounded-2xl flex justify-center items-center gap-3 hover:bg-slate-100 transition-all font-bold text-xs uppercase tracking-widest active:scale-[0.98]"
+          className="w-full border-2 border-slate-100 text-slate-600 py-4 rounded-2xl flex justify-center items-center gap-3 hover:bg-slate-50 hover:border-slate-200 transition-all font-bold text-[11px] uppercase tracking-widest active:scale-[0.98]"
         >
           <img src="https://www.svgrepo.com/show/355037/google.svg" className="w-5 h-5" alt="Google" />
           Google Account
