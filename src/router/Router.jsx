@@ -30,6 +30,8 @@ import Memberpaymnets from "../Pages/Deshboardpages/Payment/Memberpaymnets";
 import DeshboardLayout from "../Layout/DeshboardLayout";
 import Profile from "../Pages/Deshboardpages/Userprofile/Profile";
 import ClubManagerRouter from "./ClubManagerRouter";
+import About from "../Components/Shared/About";
+import Contact from "../Components/Shared/Contact";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
       {
         path: '/Clubs',
         element: <Clubs></Clubs>
+      },
+       {
+        path:'/about',
+        element:<About></About>
+      },
+      {
+        path:'/contact',
+        element:<Contact></Contact>
       },
       {
         path: '/club/:id',
@@ -71,6 +81,7 @@ const router = createBrowserRouter([
         element: <Coverage></Coverage>
       }
     ],
+    
   },
 
   {
@@ -137,10 +148,11 @@ const router = createBrowserRouter([
         path: "/deshboard/member/transaction",
         element: <Memberpaymnets></Memberpaymnets>,
       },
-       {
+      {
         path: '/deshboard/profile',
         element: <Profile></Profile>
-      }
+      },
+
 
 
     ],

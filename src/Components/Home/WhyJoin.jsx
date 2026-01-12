@@ -27,7 +27,7 @@ const WhyJoin = () => {
   ];
 
   return (
-    <section className="mt-10 pb-28 bg-gradient-to-b from-[#f0f8ff] to-white rounded-[3rem] mx-4 lg:mx-0 shadow-sm">
+    <section className="mt-10 pb-8 bg-gradient-to-b from-[#f0f8ff] to-white rounded-[3rem] mx-4 lg:mx-0 shadow-sm">
       <div className="max-w-7xl mx-auto px-6 text-center pt-24">
         {/* Header Section */}
         <div className="space-y-4 mb-20">

@@ -160,7 +160,7 @@ const EventDetails = () => {
               onClick={registration ? handleCancel : handleRegister}
               className={`w-full py-4 rounded-2xl font-black uppercase tracking-widest text-sm flex items-center justify-center gap-2 transition-all shadow-lg ${registration
                   ? "bg-slate-100 text-slate-500 hover:bg-red-50 hover:text-red-600"
-                  : "bg-slate-900 text-white hover:bg-[#007a99] shadow-slate-200"
+                  : " text-white bg-[#007a99] shadow-slate-200"
                 }`}
             >
               {registration ? (
