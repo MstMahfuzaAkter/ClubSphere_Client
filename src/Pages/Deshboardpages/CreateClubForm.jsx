@@ -45,7 +45,7 @@ const CreateClubForm = () => {
       };
 
       const res = await axiosSecure.post('/club', clubInfo);
-      
+
       if (res.data.insertedId) {
         toast.success("Club created successfully! Waiting for admin approval.");
         reset();
@@ -59,7 +59,7 @@ const CreateClubForm = () => {
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       className="max-w-4xl mx-auto "
@@ -77,7 +77,7 @@ const CreateClubForm = () => {
         <div className="absolute top-0 right-0 w-32 h-32 bg-[#007a99]/5 rounded-bl-[5rem] -z-0"></div>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 relative z-10">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Club Name */}
             <div className="form-control">
@@ -109,6 +109,17 @@ const CreateClubForm = () => {
                 <option value="Hiking">Hiking</option>
                 <option value="Music">Music</option>
                 <option value="Gaming">Gaming</option>
+                <option value="University Club">University Club</option>
+                <option value="Art & Design">Art & Design</option>
+                <option value="Coding & Programming">Coding & Programming</option>
+                <option value="Science & Research">Science & Research</option>
+                <option value="Fitness & Health">Fitness & Health</option>
+                <option value="Travel & Adventure">Travel & Adventure</option>
+                <option value="Cooking & Food">Cooking & Food</option>
+                <option value="Volunteering">Volunteering</option>
+                <option value="Book Club">Book Club</option>
+                <option value="Debate & Public Speaking">Debate & Public Speaking</option>
+
               </select>
               {errors.category && <p className="text-red-500 text-[10px] font-bold mt-2 uppercase tracking-tight">{errors.category.message}</p>}
             </div>
@@ -176,7 +187,7 @@ const CreateClubForm = () => {
           </div>
 
           {/* Submit Button */}
-          <button 
+          <button
             disabled={loading}
             className={`w-full py-5 rounded-2xl font-black uppercase text-sm tracking-[0.2em] transition-all shadow-lg 
               ${loading ? 'bg-slate-200 text-slate-400' : 'bg-[#007a99] text-white hover:bg-[#005f78] hover:scale-[1.01] active:scale-[0.99] shadow-cyan-900/20'}`}

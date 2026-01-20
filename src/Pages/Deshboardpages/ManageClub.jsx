@@ -24,7 +24,7 @@ const ManageClub = () => {
     try {
       const res = await axiosSecure.patch(`/clubs/${club._id}/status`, { status });
       if (res.data.modifiedCount) {
-        toast.success(`Club ${status === 'aproved' ? 'approved' : 'rejected'} successfully!`);
+        toast.success(`Club ${status === 'approved' ? 'approved' : 'rejected'} successfully!`);
         refetch();
       }
     } catch (error) {

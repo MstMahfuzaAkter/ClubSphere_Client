@@ -188,3 +188,9 @@ Equal card heights & grid layouts
 🏁 Conclusion
 ClubConnect demonstrates a real-world, production-ready MERN application with authentication, authorization, payment integration, and clean UI design.
 It reflects strong understanding of full-stack development, secure systems, and modern React best practices.
+
+
+
+Registration এর পর verification mail পাঠানো
+import { sendEmailVerification } from "firebase/auth";
+sendEmailVerification(auth.currentUser);

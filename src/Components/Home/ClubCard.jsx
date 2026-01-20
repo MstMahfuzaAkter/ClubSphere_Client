@@ -10,6 +10,7 @@ const ClubCard = ({ c }) => {
     location,
     bannerImage,
     membershipFee,
+    status
   } = c || {};
 
   return (
@@ -58,7 +59,7 @@ const ClubCard = ({ c }) => {
 
       {/* Status */}
       {status && status !== "approved" && (
-        <div className="mt-2 text-xs text-red-500 font-semibold">
+        <div className="mt-2 text-xs text-blue-500 font-semibold">
           {status.toUpperCase()}
         </div>
       )}

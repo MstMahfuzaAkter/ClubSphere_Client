@@ -46,7 +46,7 @@ const FeaturedClubs = () => {
                     visible: { transition: { staggerChildren: 0.15 } },
                 }}
             >
-                {clubs.slice(0, 4).map((c) => (
+                {clubs.slice(-4).map((c) => (
                     <motion.div
                         key={c._id}
                         variants={{

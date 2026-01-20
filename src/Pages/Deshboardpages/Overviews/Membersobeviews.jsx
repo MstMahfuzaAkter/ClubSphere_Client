@@ -94,7 +94,7 @@ const Membersobeviews = () => {
 
         {data?.upcomingEvents?.length === 0 ? (
           <div className="text-center py-10">
-             <p className="text-slate-400 font-medium">No upcoming events found. Why not join a new club?</p>
+            <p className="text-slate-400 font-medium">No upcoming events found. Why not join a new club?</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4">
@@ -120,7 +120,7 @@ const Membersobeviews = () => {
                       {event.title}
                     </h3>
                     <div className="flex items-center gap-4 mt-1">
-                       <p className="text-xs font-medium text-slate-400 flex items-center gap-1">
+                      <p className="text-xs font-medium text-slate-400 flex items-center gap-1">
                         <FaMapMarkerAlt size={10} /> {event.location}
                       </p>
                       <span className={`text-[10px] px-2 py-0.5 rounded-md font-black uppercase tracking-tighter ${event.isPaid ? 'bg-orange-100 text-orange-600' : 'bg-emerald-100 text-emerald-600'}`}>
@@ -129,11 +129,11 @@ const Membersobeviews = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="mt-4 md:mt-0 flex items-center gap-3">
-                   <button className="flex items-center gap-2 px-5 py-2.5 bg-white text-slate-600 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-50 transition-all shadow-sm">
-                      <FaTicketAlt /> Details
-                   </button>
+                  <button className="flex items-center gap-2 px-5 py-2.5 bg-white text-slate-600 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-50 transition-all shadow-sm">
+                    <FaTicketAlt /> Details
+                  </button>
                 </div>
               </motion.div>
             ))}

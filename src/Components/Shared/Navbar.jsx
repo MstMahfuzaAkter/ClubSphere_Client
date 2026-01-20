@@ -10,24 +10,24 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <NavLink 
-          to="/" 
+        <NavLink
+          to="/"
           className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
         >
           Home
         </NavLink>
       </li>
       <li>
-        <NavLink 
-          to="/Clubs" 
+        <NavLink
+          to="/Clubs"
           className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
         >
           Clubs
         </NavLink>
       </li>
       <li>
-        <NavLink 
-          to="/Events" 
+        <NavLink
+          to="/Events"
           className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
         >
           Events
@@ -36,16 +36,16 @@ const Navbar = () => {
       {user && (
         <>
           <li>
-            <NavLink 
-              to="/about" 
+            <NavLink
+              to="/about"
               className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
             >
               About Us
             </NavLink>
           </li>
           <li>
-            <NavLink 
-              to="/contact" 
+            <NavLink
+              to="/contact"
               className={({ isActive }) => isActive ? "text-[#0092b8] font-bold" : "hover:text-[#0092b8]"}
             >
               Contact
@@ -70,7 +70,7 @@ const Navbar = () => {
               {links}
             </ul>
           </div>
-          
+
           <Link to="/" className="flex items-center gap-2 group">
             <img src={logo} alt="Logo" className="w-10 h-10 rounded-full cursor-pointer border-2 border-transparent group-hover:border-[#0092b8] transition-all" />
             <h1 className="text-xl lg:text-2xl font-black bg-gradient-to-r from-[#0092b8] to-[#007a99] bg-clip-text text-transparent tracking-tight">
